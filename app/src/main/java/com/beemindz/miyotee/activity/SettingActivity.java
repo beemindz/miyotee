@@ -5,6 +5,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 
 import com.beemindz.miyotee.R;
+import com.beemindz.miyotee.activity.fragment.SettingsFragment;
 
 public class SettingActivity extends ActionBarActivity {
 

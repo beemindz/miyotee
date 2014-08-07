@@ -17,7 +17,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.beemindz.miyotee.R;
-import com.beemindz.miyotee.authentication.AccountAuthenticatorActivity;
+import com.beemindz.miyotee.service.authentication.AccountAuthenticatorActivity;
 import com.beemindz.miyotee.dao.TaskContentProvider;
 import com.beemindz.miyotee.util.Constant;
 import com.beemindz.miyotee.util.NetworkUtils;

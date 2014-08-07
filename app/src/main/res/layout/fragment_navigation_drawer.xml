@@ -6,4 +6,4 @@
     android:divider="@android:color/transparent"
     android:dividerHeight="0dp"
     android:background="@color/GREEN_007e3e"
-    tools:context="com.beemindz.miyotee.activity.NavigationDrawerFragment" />
+    tools:context="com.beemindz.miyotee.activity.fragment.NavigationDrawerFragment" />

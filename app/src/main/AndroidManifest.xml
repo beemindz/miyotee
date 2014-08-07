@@ -32,7 +32,7 @@
         </provider>
 
       <service
-        android:name=".authentication.AuthenticatorService"
+        android:name=".service.authentication.AuthenticatorService"
         android:exported="false"
         android:process=":auth" >
         <intent-filter>

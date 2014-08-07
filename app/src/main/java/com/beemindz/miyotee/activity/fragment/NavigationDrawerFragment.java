@@ -1,4 +1,4 @@
-package com.beemindz.miyotee.activity;
+package com.beemindz.miyotee.activity.fragment;
 
 import android.support.v7.app.ActionBarActivity;
 import android.app.Activity;

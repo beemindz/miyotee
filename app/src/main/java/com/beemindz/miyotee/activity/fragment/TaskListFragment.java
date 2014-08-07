@@ -1,4 +1,4 @@
-package com.beemindz.miyotee.activity;
+package com.beemindz.miyotee.activity.fragment;
 
 
 import android.annotation.SuppressLint;

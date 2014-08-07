@@ -1,4 +1,4 @@
-package com.beemindz.miyotee.authentication;
+package com.beemindz.miyotee.service.authentication;
 
 import android.accounts.AbstractAccountAuthenticator;
 import android.accounts.Account;

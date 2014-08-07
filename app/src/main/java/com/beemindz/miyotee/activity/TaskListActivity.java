@@ -17,6 +17,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.beemindz.miyotee.R;
+import com.beemindz.miyotee.activity.fragment.AboutFragment;
+import com.beemindz.miyotee.activity.fragment.NavigationDrawerFragment;
+import com.beemindz.miyotee.activity.fragment.TaskEditorFragment;
+import com.beemindz.miyotee.activity.fragment.TaskListFragment;
 import com.beemindz.miyotee.util.Constant;
 
 public class TaskListActivity extends ActionBarActivity

@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.beemindz.miyotee.activity.AboutFragment">
+    tools:context="com.beemindz.miyotee.activity.fragment.AboutFragment">
 
   <LinearLayout
     android:id="@+id/linearAbout"

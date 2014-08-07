@@ -1,4 +1,4 @@
-package com.beemindz.miyotee.activity;
+package com.beemindz.miyotee.activity.fragment;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
@@ -12,6 +12,8 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.util.Log;
 
 import com.beemindz.miyotee.R;
+import com.beemindz.miyotee.activity.MainActivity;
+import com.beemindz.miyotee.activity.SettingActivity;
 import com.beemindz.miyotee.util.CommonUtils;
 import com.beemindz.miyotee.util.Constant;
 
