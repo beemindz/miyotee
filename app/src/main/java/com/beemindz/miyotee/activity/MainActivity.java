@@ -2,14 +2,17 @@ package com.beemindz.miyotee.activity;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -19,6 +22,7 @@ import android.widget.TextView;
 import com.beemindz.miyotee.R;
 import com.beemindz.miyotee.service.authentication.AccountAuthenticatorActivity;
 import com.beemindz.miyotee.dao.TaskContentProvider;
+import com.beemindz.miyotee.util.CommonUtils;
 import com.beemindz.miyotee.util.Constant;
 import com.beemindz.miyotee.util.NetworkUtils;
 import com.beemindz.miyotee.util.ToastUtils;
@@ -48,10 +52,13 @@ public class MainActivity extends AccountAuthenticatorActivity {
   public static final long SYNC_INTERVAL_IN_MINUTES = 5L;
   public static final long SYNC_INTERVAL = SYNC_INTERVAL_IN_MINUTES * SECONDS_PER_MINUTE;
 
-  EditText loginName, loginPassword;
+  EditText loginName, loginPassword, edUserName;
   TextView loginError;
-  Button btnLogin;
+  Button btnLogin, btnForgotPass;
   LoginButton btnFbLogin;
+
+    // alert forgot password.
+  private AlertDialog alertDialog = null;
 
   // Progress Dialog
   private ProgressDialog pDialog;
@@ -83,6 +90,7 @@ public class MainActivity extends AccountAuthenticatorActivity {
     loginError = (TextView) findViewById(R.id.loginError);
 
     // Đăng nhập
+    btnForgotPass = (Button) findViewById(R.id.btnLinkToForgotPassDialog);
     btnFbLogin = (LoginButton) findViewById(R.id.btnFbLogin);
     btnLogin = (Button) findViewById(R.id.btnLogin);
     fbLogin();
@@ -100,8 +108,12 @@ public class MainActivity extends AccountAuthenticatorActivity {
           ToastUtils.toast(MainActivity.this, R.string.toast_err_login_pass_required);
           return;
         }
+          if (!CommonUtils.isEmailValid(userName)) {
+              ToastUtils.toast(MainActivity.this, R.string.toast_err_email_invalid);
+              return;
+          }
 
-        Login login = new Login(MainActivity.this, null, userName, pass, null);
+          Login login = new Login(MainActivity.this, null, userName, pass, null);
         login.execute();
       }
     });
@@ -120,6 +132,18 @@ public class MainActivity extends AccountAuthenticatorActivity {
       }
 
     });
+
+      btnForgotPass.setOnClickListener(new View.OnClickListener() {
+
+              @Override
+              public void onClick(View arg0) {
+
+                  AlertDialog.Builder dialogbuilder = customDialog(MainActivity.this, sendListener, cancelListener);
+
+                  alertDialog = dialogbuilder.create();
+                  alertDialog.show();
+              }
+          });
   }
 
   @Override
@@ -305,4 +329,83 @@ public class MainActivity extends AccountAuthenticatorActivity {
       }
     }
   }
+
+    // PROPERTY FORGOT PASSWORD
+    View.OnClickListener sendListener = new View.OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+
+            try {
+                if (edUserName!=null && !TextUtils.isEmpty(edUserName.getText().toString())) {
+                    if (CommonUtils.isEmailValid(edUserName.getText().toString().trim())) {
+                        GmailSender gmail = new GmailSender(MainActivity.this, edUserName.getText().toString());
+                        gmail.execute();
+                        Log.d(TAG, "edUserName = " + edUserName.getText().toString());
+                        ToastUtils.toast(MainActivity.this, R.string.toast_err_forgot_pass_send_email_succes);
+                        alertDialog.dismiss();
+                    } else {
+                        ToastUtils.toast(MainActivity.this, R.string.toast_err_email_invalid);
+                    }
+                } else {
+                    Log.d(TAG, "edUserName is null");
+                    ToastUtils.toast(MainActivity.this, R.string.toast_err_forgot_pass_email_required);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e(TAG, e + "");
+                ToastUtils.toast(MainActivity.this, R.string.toast_err_system);
+            }
+        }
+    };
+
+    public class GmailSender extends AsyncTask<Void, Void, Void> {
+
+        String email = "";
+        Context context;
+
+        public GmailSender(Context context, String from) {
+            this.context = context;
+            this.email = from;
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+
+            } catch (Exception e) {
+                Log.e(TAG, e + "GmailSender=>doInBackground " + e);
+            }
+            return null;
+        }
+
+    }
+
+    View.OnClickListener cancelListener = new View.OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+            alertDialog.dismiss();
+        }
+    };
+
+    public AlertDialog.Builder customDialog(Context context, android.view.View.OnClickListener rightBtnListener,
+                                            android.view.View.OnClickListener leftBtnListener) {
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View dialogview = inflater.inflate(R.layout.dialog_forgot_password, null);
+
+        AlertDialog.Builder dialogbuilder = new AlertDialog.Builder(context);
+        dialogbuilder.setView(dialogview);
+
+        Button buttonR = (Button) dialogview.findViewById(R.id.dialog_forgot_pass_btn_send);
+        Button buttonL = (Button) dialogview.findViewById(R.id.dialog_forgot_pass_btn_cancel);
+        edUserName = (EditText) dialogview.findViewById(R.id.dialog_forgot_pass_ed_username_email);
+        edUserName.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+
+        buttonR.setOnClickListener(rightBtnListener);
+        buttonL.setOnClickListener(leftBtnListener);
+
+        return dialogbuilder;
+    }
+    // END.
 }
