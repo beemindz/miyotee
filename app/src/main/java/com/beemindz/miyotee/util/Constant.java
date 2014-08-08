@@ -46,4 +46,5 @@ public class Constant {
     public static final String TASK_UPDATED_DATE = "updatedDate";
   }
 
+  public static final String REST_URL_FORGOT_PASSWORD = "http://ohoh123.byethost8.com/api.miyotee/forgot_pass.php";
 }
