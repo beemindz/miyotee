@@ -3,7 +3,10 @@ package com.beemindz.miyotee.activity.fragment;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -15,8 +18,10 @@ import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -25,6 +30,7 @@ import com.beemindz.miyotee.R;
 import com.beemindz.miyotee.activity.adapter.TaskListAdapter;
 import com.beemindz.miyotee.dao.Task;
 import com.beemindz.miyotee.dao.TaskRepository;
+import com.beemindz.miyotee.util.CommonUtils;
 import com.google.analytics.tracking.android.EasyTracker;
 
 import java.util.ArrayList;
@@ -50,6 +56,12 @@ public class TaskListFragment extends ListFragment {
     super.onCreate(savedInstanceState);
     tasks = new ArrayList<Task>();
 
+  }
+
+  @Override
+  public void onActivityCreated(Bundle savedInstanceState) {
+    super.onActivityCreated(savedInstanceState);
+    registerForContextMenu(getListView());
   }
 
   /**
@@ -143,10 +155,35 @@ public class TaskListFragment extends ListFragment {
 
   @Override
   public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-    super.onCreateContextMenu(menu, v, menuInfo);
+
     // Inflate menu from XML resource
     MenuInflater inflater = getActivity().getMenuInflater();
     inflater.inflate(R.menu.task_list_context, menu);
+//    super.onCreateContextMenu(menu, v, menuInfo);
+  }
+
+  @Override
+  public boolean onContextItemSelected(MenuItem item) {
+    AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+    Task task = new Task();
+    if (tasks.size() > 0) {
+      task = tasks.get(info.position);
+    }
+
+    switch (item.getItemId()) {
+      case R.id.context_edit:
+        // Launch activity to view/edit the currently selected item
+        mListener.onTaskSelected(task.getId());
+        return true;
+
+      case R.id.context_delete:
+        this.confirmDelete(task.getId()).show();
+
+        // Returns to the caller and skips further processing.
+        return true;
+      default:
+        return super.onContextItemSelected(item);
+    }
   }
 
   @Override
@@ -166,5 +203,26 @@ public class TaskListFragment extends ListFragment {
     TaskListAdapter adapter = new TaskListAdapter(getActivity(), tasks);
     listView.setAdapter(adapter);
 
+  }
+
+  /*--Confirm dialog delete--*/
+  private AlertDialog confirmDelete(final long taskId) {
+    return CommonUtils.confirmDelete(getActivity(), new android.content.DialogInterface.OnClickListener() {
+
+      @Override
+      public void onClick(DialogInterface dialog, int which) {
+        // your deleting code
+        TaskRepository.deleteTaskWithId(getActivity().getApplicationContext(), taskId);
+        dialog.dismiss();
+        getActivity().getSupportFragmentManager().popBackStack();
+        updateAdapter();
+      }
+    }, new android.content.DialogInterface.OnClickListener() {
+
+      @Override
+      public void onClick(DialogInterface dialog, int which) {
+        dialog.dismiss();
+      }
+    });
   }
 }
