@@ -28,6 +28,7 @@ import android.widget.TimePicker;
 import android.widget.ToggleButton;
 
 import com.beemindz.miyotee.R;
+import com.beemindz.miyotee.service.reminder.ReminderManager;
 import com.beemindz.miyotee.util.CommonUtils;
 import com.beemindz.miyotee.util.Constant;
 import com.beemindz.miyotee.dao.Task;
@@ -301,10 +302,15 @@ public class TaskEditorFragment extends Fragment implements View.OnClickListener
         }
       }
 
-//      if (!isReminder && !cbIsComplete.isChecked() && reminderCal.getTimeInMillis() > System.currentTimeMillis()) {
-//        new ReminderManager().setReminder(this, mCursor.getLong(mCursor.getColumnIndex(MyToDo.Tasks._ID)), mCalendar,
-//            name, description);
-//      }
+    String reminderDate = CommonUtils.getStringDate(mCalendar, Constant.DATE_TIME_FORMAT);
+    java.util.Date reminder = CommonUtils.getDate(reminderDate, Constant.DATE_TIME_FORMAT);
+    Calendar reminderCal = Calendar.getInstance();
+    reminderCal.setTime(reminder);
+
+    if (!isReminder && !cbIsComplete.isChecked() && mCalendar.getTimeInMillis() > System.currentTimeMillis()) {
+      new ReminderManager().setReminder(getActivity(), task.getId(), mCalendar,
+          task.getTaskName(), task.getTaskDescription());
+    }
 
   }
 
