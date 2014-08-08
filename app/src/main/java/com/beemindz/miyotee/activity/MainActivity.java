@@ -24,6 +24,7 @@ import com.beemindz.miyotee.dao.MiyoteeContentProvider;
 import com.beemindz.miyotee.service.authentication.AccountAuthenticatorActivity;
 import com.beemindz.miyotee.util.CommonUtils;
 import com.beemindz.miyotee.util.Constant;
+import com.beemindz.miyotee.util.JSONParser;
 import com.beemindz.miyotee.util.NetworkUtils;
 import com.beemindz.miyotee.util.ToastUtils;
 import com.facebook.FacebookException;
@@ -34,42 +35,83 @@ import com.facebook.model.GraphUser;
 import com.facebook.widget.LoginButton;
 import com.google.analytics.tracking.android.EasyTracker;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class MainActivity extends AccountAuthenticatorActivity {
 
-  private static final String TAG = "LOGIN";
-
-  // private static final String URL_HOST =
-  // "http://192.168.1.77/mytodo-service/";
   public static final String JSON_TAG_ERROR = "error";
   // Sync interval constants
   public static final long SECONDS_PER_MINUTE = 60L;
-  public static final long SYNC_INTERVAL_IN_MINUTES = 2L;
+  public static final long SYNC_INTERVAL_IN_MINUTES = 5L;
   public static final long SYNC_INTERVAL = SYNC_INTERVAL_IN_MINUTES * SECONDS_PER_MINUTE;
+  private static final String TAG = "LOGIN";
+  // PROPERTY FORGOT PASSWORD
+  View.OnClickListener sendListener = new View.OnClickListener() {
 
+    @Override
+    public void onClick(View v) {
+      try {
+        if (edUserName != null && !TextUtils.isEmpty(edUserName.getText().toString())) {
+          if (CommonUtils.isEmailValid(edUserName.getText().toString().trim())) {
+            ForgotPassword forgotPassword = new ForgotPassword(MainActivity.this, edUserName.getText().toString());
+            ResponseServer response = new ResponseServer();
+            forgotPassword.execute();
+            response = forgotPassword.get();
+            if (response != null) {
+              Log.d(TAG, "edUserName = " + edUserName.getText().toString());
+              Log.d(TAG, response.getMessage() + "," + response.getSuccess());
+              ToastUtils.toast(MainActivity.this, response.getMessage());
+              if (response.getSuccess() == 0) {
+                alertDialog.dismiss();
+              }
+            }
+          } else {
+            ToastUtils.toast(MainActivity.this, R.string.toast_err_email_invalid);
+          }
+        } else {
+          Log.d(TAG, "edUserName is null");
+          ToastUtils.toast(MainActivity.this, R.string.toast_err_forgot_pass_email_required);
+        }
+      } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(TAG, e + "");
+        ToastUtils.toast(MainActivity.this, R.string.toast_err_system);
+      }
+    }
+  };
   EditText loginName, loginPassword, edUserName;
   TextView loginError;
   Button btnLogin, btnForgotPass;
   LoginButton btnFbLogin;
-
-    // alert forgot password.
-  private AlertDialog alertDialog = null;
-
-  // Progress Dialog
-  private ProgressDialog pDialog;
   String fbAccessToken = "";
+  View.OnClickListener cancelListener = new View.OnClickListener() {
+
+    @Override
+    public void onClick(View v) {
+      alertDialog.dismiss();
+    }
+  };
+  // alert forgot password.
+  private AlertDialog alertDialog = null;
+  private JSONParser jsonParser = new JSONParser();
 
   // A content resolver for accessing the provider
+  private ProgressDialog progressDialog;
+  // Progress Dialog
+  private ProgressDialog pDialog;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-
+    getWindow().setSoftInputMode(android.view.WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setDisplayShowHomeEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
@@ -107,12 +149,12 @@ public class MainActivity extends AccountAuthenticatorActivity {
           ToastUtils.toast(MainActivity.this, R.string.toast_err_login_pass_required);
           return;
         }
-          if (!CommonUtils.isEmailValid(userName)) {
-              ToastUtils.toast(MainActivity.this, R.string.toast_err_email_invalid);
-              return;
-          }
+        if (!CommonUtils.isEmailValid(userName)) {
+          ToastUtils.toast(MainActivity.this, R.string.toast_err_email_invalid);
+          return;
+        }
 
-          Login login = new Login(MainActivity.this, null, userName, pass, null);
+        Login login = new Login(MainActivity.this, null, userName, pass, null);
         login.execute();
       }
     });
@@ -132,17 +174,17 @@ public class MainActivity extends AccountAuthenticatorActivity {
 
     });
 
-      btnForgotPass.setOnClickListener(new View.OnClickListener() {
+    btnForgotPass.setOnClickListener(new View.OnClickListener() {
 
-              @Override
-              public void onClick(View arg0) {
+      @Override
+      public void onClick(View arg0) {
 
-                  AlertDialog.Builder dialogbuilder = customDialog(MainActivity.this, sendListener, cancelListener);
+        AlertDialog.Builder dialogbuilder = customDialog(MainActivity.this, sendListener, cancelListener);
 
-                  alertDialog = dialogbuilder.create();
-                  alertDialog.show();
-              }
-          });
+        alertDialog = dialogbuilder.create();
+        alertDialog.show();
+      }
+    });
   }
 
   @Override
@@ -157,7 +199,6 @@ public class MainActivity extends AccountAuthenticatorActivity {
 
   @Override
   protected void onStart() {
-    // TODO Auto-generated method stub
     super.onStart();
 
     EasyTracker.getInstance(this).activityStart(this);
@@ -166,7 +207,6 @@ public class MainActivity extends AccountAuthenticatorActivity {
 
   @Override
   protected void onStop() {
-    // TODO Auto-generated method stub
     super.onStop();
     EasyTracker.getInstance(this).activityStop(this);
     Log.i(TAG, "==onStop==");
@@ -221,6 +261,25 @@ public class MainActivity extends AccountAuthenticatorActivity {
   public void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
     Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
+  }
+
+  public AlertDialog.Builder customDialog(Context context, android.view.View.OnClickListener rightBtnListener,
+                                          android.view.View.OnClickListener leftBtnListener) {
+    LayoutInflater inflater = LayoutInflater.from(context);
+    View dialogview = inflater.inflate(R.layout.dialog_forgot_password, null);
+
+    AlertDialog.Builder dialogbuilder = new AlertDialog.Builder(context);
+    dialogbuilder.setView(dialogview);
+
+    Button buttonR = (Button) dialogview.findViewById(R.id.dialog_forgot_pass_btn_send);
+    Button buttonL = (Button) dialogview.findViewById(R.id.dialog_forgot_pass_btn_cancel);
+    edUserName = (EditText) dialogview.findViewById(R.id.dialog_forgot_pass_ed_username_email);
+    edUserName.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+
+    buttonR.setOnClickListener(rightBtnListener);
+    buttonL.setOnClickListener(leftBtnListener);
+
+    return dialogbuilder;
   }
 
   /**
@@ -329,82 +388,84 @@ public class MainActivity extends AccountAuthenticatorActivity {
     }
   }
 
-    // PROPERTY FORGOT PASSWORD
-    View.OnClickListener sendListener = new View.OnClickListener() {
+  public class ForgotPassword extends AsyncTask<Void, Void, ResponseServer> {
 
-        @Override
-        public void onClick(View v) {
+    String email = "";
+    Context context;
+    int success = 0;
+    String message = "";
 
-            try {
-                if (edUserName!=null && !TextUtils.isEmpty(edUserName.getText().toString())) {
-                    if (CommonUtils.isEmailValid(edUserName.getText().toString().trim())) {
-                        GmailSender gmail = new GmailSender(MainActivity.this, edUserName.getText().toString());
-                        gmail.execute();
-                        Log.d(TAG, "edUserName = " + edUserName.getText().toString());
-                        ToastUtils.toast(MainActivity.this, R.string.toast_err_forgot_pass_send_email_succes);
-                        alertDialog.dismiss();
-                    } else {
-                        ToastUtils.toast(MainActivity.this, R.string.toast_err_email_invalid);
-                    }
-                } else {
-                    Log.d(TAG, "edUserName is null");
-                    ToastUtils.toast(MainActivity.this, R.string.toast_err_forgot_pass_email_required);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                Log.e(TAG, e + "");
-                ToastUtils.toast(MainActivity.this, R.string.toast_err_system);
-            }
-        }
-    };
-
-    public class GmailSender extends AsyncTask<Void, Void, Void> {
-
-        String email = "";
-        Context context;
-
-        public GmailSender(Context context, String from) {
-            this.context = context;
-            this.email = from;
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            try {
-
-            } catch (Exception e) {
-                Log.e(TAG, e + "GmailSender=>doInBackground " + e);
-            }
-            return null;
-        }
-
+    public ForgotPassword(Context context, String from) {
+      this.context = context;
+      this.email = from;
     }
 
-    View.OnClickListener cancelListener = new View.OnClickListener() {
-
-        @Override
-        public void onClick(View v) {
-            alertDialog.dismiss();
-        }
-    };
-
-    public AlertDialog.Builder customDialog(Context context, android.view.View.OnClickListener rightBtnListener,
-                                            android.view.View.OnClickListener leftBtnListener) {
-        LayoutInflater inflater = LayoutInflater.from(context);
-        View dialogview = inflater.inflate(R.layout.dialog_forgot_password, null);
-
-        AlertDialog.Builder dialogbuilder = new AlertDialog.Builder(context);
-        dialogbuilder.setView(dialogview);
-
-        Button buttonR = (Button) dialogview.findViewById(R.id.dialog_forgot_pass_btn_send);
-        Button buttonL = (Button) dialogview.findViewById(R.id.dialog_forgot_pass_btn_cancel);
-        edUserName = (EditText) dialogview.findViewById(R.id.dialog_forgot_pass_ed_username_email);
-        edUserName.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
-
-        buttonR.setOnClickListener(rightBtnListener);
-        buttonL.setOnClickListener(leftBtnListener);
-
-        return dialogbuilder;
+    @Override
+    protected void onPreExecute() {
+      super.onPreExecute();
+      progressDialog = new ProgressDialog(MainActivity.this);
+      progressDialog.setMessage("Calling server ...");
+      progressDialog.setIndeterminate(false);
+      progressDialog.setCancelable(true);
+      progressDialog.show();
     }
-    // END.
+
+    @Override
+    protected ResponseServer doInBackground(Void... params) {
+      try {
+        // Building Parameters
+        List<NameValuePair> parList = new ArrayList<NameValuePair>();
+        parList.add(new BasicNameValuePair("email", email));
+
+        // getting json object.
+
+        Log.d(TAG, "doInBackground email:" + email);
+        JSONObject jsonObject = jsonParser.makeHttpRequest(Constant.REST_URL_FORGOT_PASSWORD, "POST", parList);
+        try {
+          ResponseServer responseServer = new ResponseServer();
+          responseServer.setSuccess(jsonObject.getInt("success"));
+          responseServer.setMessage(jsonObject.getString("message"));
+
+          Log.d(TAG, "succes:" + success);
+          Log.d(TAG, "message:" + message);
+          return responseServer;
+        } catch (JSONException e) {
+          e.printStackTrace();
+          Log.e(TAG, " ForgotPassword=>doInBackground JSONException " + e);
+        }
+      } catch (Exception e) {
+        Log.e(TAG, e + "ForgotPassword=>doInBackground Exception " + e);
+      }
+      return null;
+    }
+
+
+    @Override
+    protected void onPostExecute(ResponseServer responseServer) {
+      progressDialog.dismiss();
+    }
+  }
+  // END.
+
+  public class ResponseServer {
+    int success;
+    String message;
+
+    public int getSuccess() {
+      return success;
+    }
+
+    public void setSuccess(int success) {
+      this.success = success;
+    }
+
+    public String getMessage() {
+      return message;
+    }
+
+    public void setMessage(String message) {
+      this.message = message;
+    }
+  }
 }
+

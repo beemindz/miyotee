@@ -12,7 +12,7 @@
   <string name="send">Send</string>
 
   <!-- LAYOUT LOGIN -->
-  <string name="username">Username</string>
+  <string name="username">Email</string>
   <string name="password">Password</string>
   <string name="fullname">Fullname</string>
   <string name="login">Sign In</string>
