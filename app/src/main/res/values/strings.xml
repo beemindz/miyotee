@@ -19,9 +19,10 @@
   <string name="register">Sign Up</string>
   <string name="link_to_register_screen">Do you have an account? Sign up now!</string>
   <string name="link_to_login_screen">Do you have already an account? Sign in!</string>
+  <string name="link_open_forgot_pass_dialog">You are forgot password?</string>
 
   <!-- LAYOUT TASK EDITOR -->
-  <string name="no_reminders"></string>
+  <string name="no_reminders">no reminder</string>
   <string name="task_name">Name</string>
   <string name="task_description">Description</string>
   <string name="date">DATE</string>
@@ -45,6 +46,11 @@
   <string name="toast_msg_task_delete_success">Delete succes.</string>
   <string name="toast_msg_task_delete_failed">Delete failed.</string>
   <string name="toast_msg_reminder_snooze"><b>%1$s</b> snoozed for %2$d minutes</string>
+    <string name="toast_err_forgot_pass_email_required">Please input email address!</string>
+    <string name="toast_err_system">Error system!</string>
+    <string name="toast_err_forgot_pass_send_email_succes">You will receiver a email change password in a few minutes!</string>
+    <string name="toast_err_email_invalid">Email invalid? Ex:youemail@domain.com</string>
+    <string name="toast_err_email_or_pass_incorrect">Login failed. Incorrect email/password.</string>
 
   <!-- EDIT TEXT -->
   <string name="et_hint_task_title">Add an event&#8230;</string>
@@ -111,4 +117,15 @@
   <string name="setting_confirm_title_sign_out">Sign out</string>
   <string name="setting_confirm_message_sign_out">Do you want to sign out?</string>
 
+  <!-- DIALOG FORGOT PASSWORD -->
+  <string name="dialog_forgot_pass_title">Forgot your password?</string>
+  <string name="dialog_forgot_pass_tv_username_email">Email</string>
+
+  <!-- CONTENT EMAIL -->
+  <string name="email_forgot_pass_title">[Miyotee] - User forgot password</string>
+  <string name="email_forgot_pass_content">You are forgot password. Your password is 123456. Please change password!</string>
+
+  <!-- CHANGE PASSWORD -->
+  <string name="change_pass_title">Change Password</string>
+  <string name="change_pass_repassword">Re-Passwrod</string>
 </resources>
