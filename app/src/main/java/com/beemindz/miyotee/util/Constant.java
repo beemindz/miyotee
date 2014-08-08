@@ -2,6 +2,7 @@ package com.beemindz.miyotee.util;
 
 public class Constant {
 
+  public static final String URL_HOST = "http://192.168.1.77/miyotee-service/";
   public static final String ACCOUNT_TYPE = "com.beemindz.miyotee";
   public static final String DATE_FORMAT = "yyyy-MM-dd";
   public static final String TIME_FORMAT = "kk:mm";
@@ -31,4 +32,18 @@ public class Constant {
   public static final String KEY_TASK_NAME = "taskName";
   public static final String KEY_TASK_DESCRIPTION = "taskDescription";
   public static final String KEY_TASK_REMINDER_DATE = "taskReminderDate";
+
+  public static class JsonNoteName {
+    public static final String TASK_ID = "taskId";
+    public static final String TASK_NAME = "taskName";
+    public static final String TASK_DESCRIPTION = "taskDescription";
+    public static final String TASK_DUE_DATE = "dueDate";
+    public static final String TASK_REMINDER_DATE = "reminderDate";
+    public static final String TASK_IS_REMINDER = "isReminder";
+    public static final String TASK_IS_DUE_DATE = "isDueDate";
+    public static final String TASK_IS_COMPLETE = "isComplete";
+    public static final String TASK_CREATED_DATE = "createdDate";
+    public static final String TASK_UPDATED_DATE = "updatedDate";
+  }
+
 }
