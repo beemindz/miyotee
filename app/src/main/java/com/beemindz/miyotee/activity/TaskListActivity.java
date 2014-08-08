@@ -2,7 +2,6 @@ package com.beemindz.miyotee.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -21,21 +20,20 @@ import com.beemindz.miyotee.activity.fragment.AboutFragment;
 import com.beemindz.miyotee.activity.fragment.NavigationDrawerFragment;
 import com.beemindz.miyotee.activity.fragment.TaskEditorFragment;
 import com.beemindz.miyotee.activity.fragment.TaskListFragment;
-import com.beemindz.miyotee.util.Constant;
+import com.beemindz.miyotee.util.CommonUtils;
 
 public class TaskListActivity extends ActionBarActivity
     implements NavigationDrawerFragment.NavigationDrawerCallbacks, TaskListFragment.OnTaskSelectedListener {
 
+  private final String TAG = "LIST";
   /**
    * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
    */
   private NavigationDrawerFragment mNavigationDrawerFragment;
-
   /**
    * Used to store the last screen title. For use in {@link #restoreActionBar()}.
    */
   private CharSequence mTitle;
-  private final String TAG = "LIST";
 
   public TaskListActivity() {
   }
@@ -76,7 +74,6 @@ public class TaskListActivity extends ActionBarActivity
         mTitle = getString(R.string.title_activity_list);
         break;
       case 2:
-        mTitle = getString(R.string.title_activity_list);
         Intent intentSetting = new Intent(TaskListActivity.this, SettingActivity.class);
         startActivity(intentSetting);
         break;
@@ -84,17 +81,7 @@ public class TaskListActivity extends ActionBarActivity
         mTitle = getString(R.string.title_about);
         break;
       case 4:
-        mTitle = getString(R.string.like_us_fb);
-        Intent facebookIntent;
-        try {
-          this.getPackageManager()
-              .getPackageInfo("com.facebook.katana", 0);
-          facebookIntent = new Intent(Intent.ACTION_VIEW,
-              Uri.parse(String.format("fb://profile/%s", Constant.FB_MIYOTEE_ID)));
-        } catch (Exception e) {
-          facebookIntent = new Intent(Intent.ACTION_VIEW,
-              Uri.parse(String.format("https://www.facebook.com/%s", Constant.FB_MIYOTEE_NAME)));
-        }
+        Intent facebookIntent = CommonUtils.getOpenFacebookIntent(this);
         startActivity(facebookIntent);
         break;
 
@@ -175,6 +162,9 @@ public class TaskListActivity extends ActionBarActivity
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
 
+    public PlaceholderFragment() {
+    }
+
     /**
      * Returns a new instance of this fragment for the given section
      * number.
@@ -187,9 +177,6 @@ public class TaskListActivity extends ActionBarActivity
       args.putInt(ARG_SECTION_NUMBER, sectionNumber);
       fragment.setArguments(args);
       return fragment;
-    }
-
-    public PlaceholderFragment() {
     }
 
     @Override

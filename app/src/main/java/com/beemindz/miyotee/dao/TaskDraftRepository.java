@@ -6,12 +6,9 @@ import com.beemindz.miyotee.MiyoteeApplication;
 
 import java.util.List;
 
-/**
- * Created by Sony on 8/1/2014.
- */
 public class TaskDraftRepository {
-  public static void insertOrUpdate(Context context, TaskDraft taskDraft) {
-    getTaskDraftDao(context).insertOrReplace(taskDraft);
+  public static long insertOrUpdate(Context context, TaskDraft taskDraft) {
+    return getTaskDraftDao(context).insertOrReplace(taskDraft);
   }
 
   public static void clearTaskDrafts(Context context) {

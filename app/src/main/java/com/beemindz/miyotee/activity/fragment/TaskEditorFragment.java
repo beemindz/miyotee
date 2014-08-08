@@ -85,18 +85,16 @@ public class TaskEditorFragment extends Fragment implements View.OnClickListener
     if (getArguments() != null) {
       mTaskId = getArguments().getLong(ARG_TASK_ID);
     }
-    Log.d(TAG, "TaskId" + mTaskId);
     mCalendar = Calendar.getInstance();
     task = new Task();
     customActionBar();
-
   }
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
 
-
+    Log.d(TAG, "On Create View");
     View view = inflater.inflate(R.layout.fragment_task_editor, container, false);
     // Gets a handle to the EditText in the the layout.
     etName = (EditText) view.findViewById(R.id.etName);
@@ -130,10 +128,12 @@ public class TaskEditorFragment extends Fragment implements View.OnClickListener
 
   @Override
   public void onResume() {
+    Log.d(TAG, "On Resume");
     super.onResume();
     if (adView != null) {
       adView.resume();
     }
+
   }
 
   @Override
@@ -175,6 +175,11 @@ public class TaskEditorFragment extends Fragment implements View.OnClickListener
       isShowReminder();
 
       mCalendar.setTime(task.getReminderDate());
+      if (isReminder && mCalendar.getTimeInMillis() <= System.currentTimeMillis()) {
+        mCalendar = Calendar.getInstance();
+        mCalendar.add(Calendar.MINUTE, Constant.ADDED_MINUTE);
+      }
+
       etTime.setText(CommonUtils.getStringDate(task.getReminderDate(), Constant.TIME_FORMAT));
       etDate.setText(CommonUtils.getStringDate(task.getReminderDate(), CommonUtils.getDateFormatSystem(getActivity().getApplicationContext())));
 
@@ -235,14 +240,12 @@ public class TaskEditorFragment extends Fragment implements View.OnClickListener
 
   @Override
   public void onClick(View view) {
-    Log.d(TAG, "onclick" + view.getId());
     switch (view.getId()) {
       case R.id.tgbSetReminder :
         isReminder = ((ToggleButton) view).isChecked();
         isShowReminder();
         break;
       case R.id.btnSelectDate:
-        Log.d(TAG, "btnSelectDate clicked");
         DialogFragment dateFragment = new SelectDateFragment();
         dateFragment.show(getActivity().getSupportFragmentManager(), "DatePicker");
         break;
@@ -287,8 +290,10 @@ public class TaskEditorFragment extends Fragment implements View.OnClickListener
         if (task != null) {
           task.setTaskName(etName.getText().toString());
           task.setTaskDescription(etDescription.getText().toString());
-          task.setIsReminder(btnReminder.isChecked());
+          task.setIsReminder(!btnReminder.isChecked());
           task.setIsComplete(cbIsComplete.isChecked());
+          task.setIsDueDate(false);
+          task.setDueDate(Calendar.getInstance().getTime());
           task.setReminderDate(mCalendar.getTime());
           task.setUpdatedDate(Calendar.getInstance().getTime());
 

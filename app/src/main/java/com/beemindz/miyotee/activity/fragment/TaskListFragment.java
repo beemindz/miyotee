@@ -11,7 +11,10 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -80,13 +83,16 @@ public class TaskListFragment extends ListFragment {
         if (!TextUtils.isEmpty(title)) {
           Task task = new Task();
           task.setTaskName(title);
+
           task.setIsReminder(false);
           task.setIsComplete(false);
+          task.setIsDueDate(false);
+          task.setDueDate(Calendar.getInstance().getTime());
           task.setReminderDate(Calendar.getInstance().getTime());
           task.setUpdatedDate(Calendar.getInstance().getTime());
           task.setCreatedDate(Calendar.getInstance().getTime());
-
           TaskRepository.insertOrUpdate(getActivity().getApplicationContext(), task);
+
           etTitle.setText("");
           updateAdapter();
         }
@@ -133,6 +139,14 @@ public class TaskListFragment extends ListFragment {
       throw new ClassCastException(activity.toString()
           + " must implement OnTaskSelectedListener");
     }
+  }
+
+  @Override
+  public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+    super.onCreateContextMenu(menu, v, menuInfo);
+    // Inflate menu from XML resource
+    MenuInflater inflater = getActivity().getMenuInflater();
+    inflater.inflate(R.menu.task_list_context, menu);
   }
 
   @Override

@@ -20,7 +20,7 @@ import de.greenrobot.dao.DaoLog;
             android:authorities="com.beemindz.miyotee.dao.provider"/>
     */
 
-public class TaskContentProvider extends ContentProvider {
+public class MiyoteeContentProvider extends ContentProvider {
 
   public static final String AUTHORITY = "com.beemindz.miyotee.dao.provider";
   public static final String BASE_PATH = "tasks";
@@ -72,13 +72,13 @@ public class TaskContentProvider extends ContentProvider {
 
   @Override
   public boolean onCreate() {
-    if(daoSession == null) {
+    if (daoSession == null) {
       DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(getContext(), "miyotee-db", null);
       SQLiteDatabase db = helper.getWritableDatabase();
       DaoMaster daoMaster = new DaoMaster(db);
       daoSession = daoMaster.newSession();
 
-    //throw new IllegalStateException("DaoSession must be set before content provider is created");
+      //throw new IllegalStateException("DaoSession must be set before content provider is created");
     }
     DaoLog.d("Content Provider started: " + CONTENT_URI);
     return true;

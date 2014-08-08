@@ -10,7 +10,7 @@ import de.greenrobot.daogenerator.Schema;
 public class MiyoteeGenerator {
   public static void main(String args[]) throws Exception {
 
-    Schema schema = new Schema(1, "com.beemindz.miyotee.dao");
+    Schema schema = new Schema(2, "com.beemindz.miyotee.dao");
 
     Entity task = schema.addEntity("Task");
     task.addIdProperty();
@@ -18,8 +18,10 @@ public class MiyoteeGenerator {
     task.addStringProperty("userName");
     task.addStringProperty("taskName");
     task.addStringProperty("taskDescription");
+    task.addDateProperty("dueDate");
     task.addDateProperty("reminderDate");
     task.addBooleanProperty("isReminder");
+    task.addBooleanProperty("isDueDate");
     task.addBooleanProperty("isComplete");
     task.addDateProperty("createdDate");
     task.addDateProperty("updatedDate");
@@ -31,8 +33,10 @@ public class MiyoteeGenerator {
     taskDraft.addStringProperty("userName");
     taskDraft.addStringProperty("taskName");
     taskDraft.addStringProperty("taskDescription");
+    taskDraft.addDateProperty("dueDate");
     taskDraft.addDateProperty("reminderDate");
     taskDraft.addBooleanProperty("isReminder");
+    taskDraft.addBooleanProperty("isDueDate");
     taskDraft.addBooleanProperty("isComplete");
     taskDraft.addDateProperty("createdDate");
     taskDraft.addDateProperty("updatedDate");

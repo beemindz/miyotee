@@ -17,8 +17,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.beemindz.miyotee.R;
-import com.beemindz.miyotee.dao.TaskContentProvider;
-import com.beemindz.miyotee.util.CommonUtils;
+import com.beemindz.miyotee.dao.MiyoteeContentProvider;
 import com.beemindz.miyotee.util.Constant;
 import com.beemindz.miyotee.util.NetworkUtils;
 import com.beemindz.miyotee.util.ToastUtils;
@@ -30,8 +29,6 @@ import org.json.JSONObject;
 public class SignUpActivity extends AccountAuthenticatorActivity {
 
   private static final String TAG = "SIGNUP";
-  private static final String URL_HOST = "http://ohoh123.byethost8.com/mytodo/";
-  //  private static final String URL_HOST = "http://192.168.1.77/mytodo-service/";
   public static final String JSON_TAG_ERROR = "error";
   // Sync interval constants
   public static final long SECONDS_PER_MINUTE = 60L;
@@ -81,10 +78,6 @@ public class SignUpActivity extends AccountAuthenticatorActivity {
           ToastUtils.toast(SignUpActivity.this, R.string.toast_err_login_pass_required);
           return;
         }
-          if (!CommonUtils.isEmailValid(userName)) {
-              ToastUtils.toast(SignUpActivity.this, R.string.toast_err_email_invalid);
-              return;
-          }
 
         SignUp signUp = new SignUp(SignUpActivity.this);
         signUp.execute();
@@ -158,7 +151,7 @@ public class SignUpActivity extends AccountAuthenticatorActivity {
         Log.i(TAG, "fbAccessToken : " + fbAccessToken);
         // getting product details by making HTTP request
         // Note that product details url will use GET request
-        JSONObject json = NetworkUtils.postJSONObjFromUrl(URL_HOST + "sign-up.php", keys, values);
+        JSONObject json = NetworkUtils.postJSONObjFromUrl(Constant.URL_HOST + "sign-up.php", keys, values);
 
         // check your log for json response
         Log.d("Json sign-up response : ", json.toString());
@@ -180,9 +173,9 @@ public class SignUpActivity extends AccountAuthenticatorActivity {
             /*
              * Turn on periodic syncing
              */
-            ContentResolver.setSyncAutomatically(account, TaskContentProvider.AUTHORITY, true);
+            ContentResolver.setSyncAutomatically(account, MiyoteeContentProvider.AUTHORITY, true);
 
-            ContentResolver.addPeriodicSync(account, TaskContentProvider.AUTHORITY, new Bundle(), SYNC_INTERVAL);
+            ContentResolver.addPeriodicSync(account, MiyoteeContentProvider.AUTHORITY, new Bundle(), SYNC_INTERVAL);
             return true;
           } else {
             return false;

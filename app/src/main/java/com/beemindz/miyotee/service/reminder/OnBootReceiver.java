@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.util.Log;
 
-import com.beemindz.miyotee.dao.TaskContentProvider;
+import com.beemindz.miyotee.dao.MiyoteeContentProvider;
 import com.beemindz.miyotee.dao.TaskDao;
 import com.beemindz.miyotee.util.Constant;
 
@@ -27,7 +27,7 @@ public class OnBootReceiver extends BroadcastReceiver {
     Log.d("==OnBootReceiver==", "==onReceive==");
     ReminderManager reminderMgr = new ReminderManager();
 
-    Cursor cursor = context.getContentResolver().query(TaskContentProvider.CONTENT_URI, TASK_PROJECTION,
+    Cursor cursor = context.getContentResolver().query(MiyoteeContentProvider.CONTENT_URI, TASK_PROJECTION,
         TaskDao.Properties.IsReminder.columnName + " = ? AND " + TaskDao.Properties.IsComplete.columnName + " = ? ", new String[]{"1", "0"}, null);
     if (cursor != null) {
       cursor.moveToFirst();

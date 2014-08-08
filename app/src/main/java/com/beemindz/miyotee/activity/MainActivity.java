@@ -20,8 +20,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.beemindz.miyotee.R;
+import com.beemindz.miyotee.dao.MiyoteeContentProvider;
 import com.beemindz.miyotee.service.authentication.AccountAuthenticatorActivity;
-import com.beemindz.miyotee.dao.TaskContentProvider;
 import com.beemindz.miyotee.util.CommonUtils;
 import com.beemindz.miyotee.util.Constant;
 import com.beemindz.miyotee.util.NetworkUtils;
@@ -42,14 +42,13 @@ import java.util.Arrays;
 public class MainActivity extends AccountAuthenticatorActivity {
 
   private static final String TAG = "LOGIN";
-  private static final String URL_HOST = "http://192.168.1.77/mytodo-service/";
 
   // private static final String URL_HOST =
   // "http://192.168.1.77/mytodo-service/";
   public static final String JSON_TAG_ERROR = "error";
   // Sync interval constants
   public static final long SECONDS_PER_MINUTE = 60L;
-  public static final long SYNC_INTERVAL_IN_MINUTES = 5L;
+  public static final long SYNC_INTERVAL_IN_MINUTES = 2L;
   public static final long SYNC_INTERVAL = SYNC_INTERVAL_IN_MINUTES * SECONDS_PER_MINUTE;
 
   EditText loginName, loginPassword, edUserName;
@@ -263,7 +262,7 @@ public class MainActivity extends AccountAuthenticatorActivity {
         String[] keys = new String[]{"username", "password", "fbAccessToken"};
         String[] values = new String[]{username, password, accessToken};
 
-        JSONObject json = NetworkUtils.postJSONObjFromUrl(URL_HOST + "login.php", keys, values);
+        JSONObject json = NetworkUtils.postJSONObjFromUrl(Constant.URL_HOST + "login.php", keys, values);
         // json error tagc
         error = json.getBoolean(JSON_TAG_ERROR);
 
@@ -282,9 +281,9 @@ public class MainActivity extends AccountAuthenticatorActivity {
             /*
              * Turn on periodic syncing
              */
-            ContentResolver.setSyncAutomatically(account, TaskContentProvider.AUTHORITY, true);
+            ContentResolver.setSyncAutomatically(account, MiyoteeContentProvider.AUTHORITY, true);
 
-            ContentResolver.addPeriodicSync(account, TaskContentProvider.AUTHORITY, new Bundle(), SYNC_INTERVAL);
+            ContentResolver.addPeriodicSync(account, MiyoteeContentProvider.AUTHORITY, new Bundle(), SYNC_INTERVAL);
             return true;
           } else {
             return false;

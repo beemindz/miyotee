@@ -13,10 +13,10 @@ import android.os.RemoteException;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.beemindz.miyotee.dao.TaskContentProvider;
+import com.beemindz.miyotee.dao.MiyoteeContentProvider;
 import com.beemindz.miyotee.dao.TaskDao;
-import com.beemindz.miyotee.dao.TaskDraftContentProvider;
 import com.beemindz.miyotee.dao.TaskDraftDao;
+import com.beemindz.miyotee.util.CommonUtils;
 import com.beemindz.miyotee.util.Constant;
 import com.beemindz.miyotee.util.NetworkUtils;
 
@@ -24,17 +24,18 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Date;
+
 public class SyncAdapter extends AbstractThreadedSyncAdapter {
 
-  private final String TAG = "SyncAdapter";
-//  private final String URL_HOST = "http://ohoh123.byethost8.com/mytodo/";
-  private final String URL_HOST = "http://192.168.1.77/mytodo-service/";
+  //  private final String URL_HOST = "http://ohoh123.byethost8.com/mytodo/";
   // JSON Node names
   public final String TAG_ERROR = "error";
-
+  private final String TAG = "SyncAdapter";
   private final String[] TASK_DRAFT_PROJECTION = new String[]{TaskDraftDao.Properties.Id.columnName,
       TaskDraftDao.Properties.TaskId.columnName, TaskDraftDao.Properties.UserName.columnName, TaskDraftDao.Properties.TaskName.columnName,
-      TaskDraftDao.Properties.TaskDescription.columnName, TaskDraftDao.Properties.ReminderDate.columnName,
+      TaskDraftDao.Properties.TaskDescription.columnName, TaskDraftDao.Properties.DueDate.columnName, TaskDraftDao.Properties.ReminderDate.columnName,
+      TaskDraftDao.Properties.IsReminder.columnName, TaskDraftDao.Properties.IsDueDate.columnName, TaskDraftDao.Properties.IsComplete.columnName,
       TaskDraftDao.Properties.CreatedDate.columnName, TaskDraftDao.Properties.UpdatedDate.columnName, TaskDraftDao.Properties.Status.columnName};
 
   public SyncAdapter(Context context, boolean autoInitialize) {
@@ -57,11 +58,10 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
 
   /**
    * @param contentProviderClient
-   * @throws android.os.RemoteException
    */
   public void syncToLocal(Account account, ContentProviderClient contentProviderClient, String updated) {
     Log.i(TAG, "begin sync to local");
-    String urlGetAllTask = URL_HOST + "get-all-task.php";
+    String urlGetAllTask = Constant.URL_HOST + "get-all-task.php";
 
     // Building Parameters
     String[] keys = new String[]{"username", "updatedDate"};
@@ -85,43 +85,54 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
             ContentValues contentValues = new ContentValues();
             JSONObject jsonObject = arrTask.getJSONObject(i);
 
-            contentValues.put(TaskDao.Properties.TaskId.columnName, jsonObject.getInt(TaskDao.Properties.TaskId.columnName));
+            contentValues.put(TaskDao.Properties.TaskId.columnName, jsonObject.getInt(Constant.JsonNoteName.TASK_ID));
             contentValues.put(TaskDao.Properties.UserName.columnName, account.name);
-            contentValues.put(TaskDao.Properties.TaskName.columnName, jsonObject.getString(TaskDao.Properties.TaskName.columnName));
+            contentValues.put(TaskDao.Properties.TaskName.columnName, jsonObject.getString(Constant.JsonNoteName.TASK_NAME));
             contentValues.put(TaskDao.Properties.TaskDescription.columnName,
-                jsonObject.getString(TaskDao.Properties.TaskDescription.columnName));
+                jsonObject.getString(Constant.JsonNoteName.TASK_DESCRIPTION));
+            contentValues.put(TaskDao.Properties.IsReminder.columnName, jsonObject.getInt(Constant.JsonNoteName.TASK_IS_REMINDER));
+            contentValues.put(TaskDao.Properties.IsDueDate.columnName, jsonObject.getInt(Constant.JsonNoteName.TASK_IS_DUE_DATE));
+            contentValues.put(TaskDao.Properties.IsComplete.columnName, jsonObject.getInt(Constant.JsonNoteName.TASK_IS_COMPLETE));
 
-            String reminder = jsonObject.getString(TaskDao.Properties.ReminderDate.columnName);
-            String createdDate = jsonObject.getString(TaskDao.Properties.CreatedDate.columnName);
-            String updatedDate = jsonObject.getString(TaskDao.Properties.UpdatedDate.columnName);
+            String dueDate = jsonObject.getString(Constant.JsonNoteName.TASK_DUE_DATE);
+            String reminderDate = jsonObject.getString(Constant.JsonNoteName.TASK_REMINDER_DATE);
+            String createdDate = jsonObject.getString(Constant.JsonNoteName.TASK_CREATED_DATE);
+            String updatedDate = jsonObject.getString(Constant.JsonNoteName.TASK_UPDATED_DATE);
 
-            if (!TextUtils.isEmpty(reminder) && !"0000-00-00 00:00:00".equals(reminder)) {
-              contentValues.put(TaskDao.Properties.ReminderDate.columnName, reminder);
+            if (!TextUtils.isEmpty(reminderDate) && !"0000-00-00 00:00:00".equals(reminderDate)) {
+              Long timeMillis = CommonUtils.getTimeMillis(dueDate, Constant.DATE_TIME_FORMAT);
+              contentValues.put(TaskDao.Properties.DueDate.columnName, timeMillis);
+            }
+            if (!TextUtils.isEmpty(reminderDate) && !"0000-00-00 00:00:00".equals(reminderDate)) {
+              Long timeMillis = CommonUtils.getTimeMillis(reminderDate, Constant.DATE_TIME_FORMAT);
+              contentValues.put(TaskDao.Properties.ReminderDate.columnName, timeMillis);
             }
             if (!TextUtils.isEmpty(createdDate)) {
-              contentValues.put(TaskDao.Properties.CreatedDate.columnName, createdDate);
+              Long timeMillis = CommonUtils.getTimeMillis(reminderDate, Constant.DATE_TIME_FORMAT);
+              contentValues.put(TaskDao.Properties.CreatedDate.columnName, timeMillis);
             }
-            if (!TextUtils.isEmpty(updatedDate)) {
-              contentValues.put(TaskDao.Properties.UpdatedDate.columnName, updatedDate);
+            if (!TextUtils.isEmpty(updatedDate) && !"0000-00-00 00:00:00".equals(reminderDate)) {
+              Long timeMillis = CommonUtils.getTimeMillis(reminderDate, Constant.DATE_TIME_FORMAT);
+              contentValues.put(TaskDao.Properties.UpdatedDate.columnName, timeMillis);
             }
 
             // Kiểm tra tồn tại task?
-            Cursor cursor = contentProviderClient.query(TaskContentProvider.CONTENT_URI, new String[]{TaskDao.Properties.UpdatedDate.columnName},
-                TaskDao.Properties.TaskId.columnName + " = ? ", new String[]{jsonObject.getString(TaskDao.Properties.TaskId.columnName)}, "_ID DESC LIMIT(1)");
+            Cursor cursor = contentProviderClient.query(MiyoteeContentProvider.CONTENT_URI, new String[]{TaskDao.Properties.Id.columnName},
+                TaskDao.Properties.TaskId.columnName + " = ? ", new String[]{jsonObject.getString(Constant.JsonNoteName.TASK_ID)}, "_ID DESC LIMIT(1)");
 
             if (cursor.getCount() > 0) {
               cursor.moveToFirst();
               Log.i(TAG, "Count Cursor : " + cursor.getCount());
               // Local taskId
-              int id = cursor.getInt(cursor.getColumnIndex(TaskDao.Properties.Id.columnName));
+              Long id = cursor.getLong(cursor.getColumnIndex(TaskDao.Properties.Id.columnName));
               // Thực hiện update
-              Uri updateUri = Uri.withAppendedPath(TaskContentProvider.CONTENT_ID_URI, String.valueOf(id));
+              Uri updateUri = Uri.withAppendedPath(MiyoteeContentProvider.CONTENT_ID_URI, id.toString());
               Log.i(TAG, updateUri.toString());
               contentProviderClient.update(updateUri, contentValues, null, null);
             } else {
               // Thực hiện insert
               Log.i(TAG, "Inserting task");
-              contentProviderClient.insert(TaskContentProvider.CONTENT_URI, contentValues);
+              contentProviderClient.insert(MiyoteeContentProvider.CONTENT_URI, contentValues);
               Log.i(TAG, "Inserted task");
             }
           }
@@ -144,14 +155,18 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
    */
   private String getUpdatedDate(ContentProviderClient contentProviderClient) {
     try {
-      Cursor cursor = contentProviderClient.query(TaskContentProvider.CONTENT_URI,
+      Cursor cursor = contentProviderClient.query(MiyoteeContentProvider.CONTENT_URI,
           new String[]{TaskDao.Properties.UpdatedDate.columnName}, TaskDao.Properties.TaskId.columnName + " > ? ",
           new String[]{"0"}, TaskDao.Properties.UpdatedDate.columnName + " DESC LIMIT(1)");
       if (cursor.getCount() > 0) {
         cursor.moveToFirst();
 
         int colUpdateIndex = cursor.getColumnIndex(TaskDao.Properties.UpdatedDate.columnName);
-        return cursor.getString(colUpdateIndex);
+        Long timeInMillis = cursor.getLong(colUpdateIndex);
+        Date date = new Date();
+        date.setTime(timeInMillis);
+
+        return CommonUtils.getStringDate(date, Constant.DATE_TIME_FORMAT);
       }
     } catch (RemoteException e) {
       // TODO Auto-generated catch block
@@ -166,14 +181,14 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
   private void syncToServer(Account account, ContentProviderClient contentProviderClient) {
     Log.i(TAG, "begin sync to server");
     // Building Parameters
-    String[] keys = new String[]{"username", "taskId", "name", "description", "reminderDate", "createdDate",
-        "updatedDate"};
+    String[] keys = new String[]{"username", "taskId", "taskName", "taskDescription", "dueDate", "reminderDate", "isReminder", "isDueDate",
+        "isComplete", "updatedDate"};
     boolean noteError;
 
     try {
       // Uri uri = Uri.withAppendedPath(MyToDo.Tasks.CONTENT_DRAP_URI_BASE, "0");
-      Cursor cursor = contentProviderClient.query(TaskDraftContentProvider.TASK_DRAFT_CONTENT_URI, TASK_DRAFT_PROJECTION, TaskDraftDao.Properties.UserName.columnName + " = ?", new String[]{account.name},
-          null);
+      Cursor cursor = contentProviderClient.query(MiyoteeContentProvider.TASK_DRAFT_CONTENT_URI, TASK_DRAFT_PROJECTION,
+          null, null, null);
 
       if (cursor.getCount() > 0) {
         Log.i(TAG, "Count cursor : " + cursor.getCount());
@@ -183,29 +198,35 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         int colTaskIdIndex = cursor.getColumnIndex(TaskDraftDao.Properties.TaskId.columnName);
         int colNameIndex = cursor.getColumnIndex(TaskDraftDao.Properties.TaskName.columnName);
         int colDescriptionIndex = cursor.getColumnIndex(TaskDraftDao.Properties.TaskDescription.columnName);
+        int colDueDateIndex = cursor.getColumnIndex(TaskDraftDao.Properties.DueDate.columnName);
         int colReminderIndex = cursor.getColumnIndex(TaskDraftDao.Properties.ReminderDate.columnName);
-        int colCreatedDateIndex = cursor.getColumnIndex(TaskDraftDao.Properties.CreatedDate.columnName);
+        int colIsReminderIndex = cursor.getColumnIndex(TaskDraftDao.Properties.IsReminder.columnName);
+        int colIsDueDateIndex = cursor.getColumnIndex(TaskDraftDao.Properties.IsDueDate.columnName);
+        int colIsCompleteIndex = cursor.getColumnIndex(TaskDraftDao.Properties.IsComplete.columnName);
         int colUpdatedDateIndex = cursor.getColumnIndex(TaskDraftDao.Properties.UpdatedDate.columnName);
         int colStatusIndex = cursor.getColumnIndex(TaskDraftDao.Properties.Status.columnName);
 
         do {
           Long id = cursor.getLong(colIdIndex);
           Long taskId = cursor.getLong(colTaskIdIndex);
-          String name = cursor.getString(colNameIndex);
-          String description = cursor.getString(colDescriptionIndex);
-          String reminderDate = cursor.getString(colReminderIndex);
-          String createdDate = cursor.getString(colCreatedDateIndex);
-          String updatedDate = cursor.getString(colUpdatedDateIndex);
+          String taskName = cursor.getString(colNameIndex);
+          String taskDescription = cursor.getString(colDescriptionIndex);
+          String dueDate = CommonUtils.getStringDate(cursor.getLong(colDueDateIndex), Constant.DATE_TIME_FORMAT);
+          String reminderDate = CommonUtils.getStringDate(cursor.getLong(colReminderIndex), Constant.DATE_TIME_FORMAT);
+          Long isReminder = cursor.getLong(colIsReminderIndex);
+          Long isDueDate = cursor.getLong(colIsDueDateIndex);
+          Long isComplete = cursor.getLong(colIsCompleteIndex);
+          String updatedDate = CommonUtils.getStringDate(cursor.getLong(colUpdatedDateIndex), Constant.DATE_TIME_FORMAT);
           Long status = cursor.getLong(colStatusIndex);
 
-          String[] values = new String[]{account.name, taskId.toString(), name, description, reminderDate,
-              createdDate, updatedDate};
+          String[] values = new String[]{account.name, taskId.toString(), taskName, taskDescription, dueDate, reminderDate, isReminder.toString(), isDueDate.toString(),
+              isComplete.toString(), updatedDate};
 
           switch (status.intValue()) {
 
             case Constant.TASK_DRAFT_STATUS_INSERT:
 
-              String urlAddTask = URL_HOST + "add-task.php";
+              String urlAddTask = Constant.URL_HOST + "add-task.php";
 
               JSONObject addTaskResult = NetworkUtils.postJSONObjFromUrl(urlAddTask, keys, values);
               // check your log for json response
@@ -222,14 +243,14 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                   JSONObject jsonObject = arrTask.getJSONObject(i);
 
                   Log.i(TAG, "Start Update task : " + id);
-                  contentValues.put(TaskDao.Properties.Id.columnName, jsonObject.getInt(TaskDao.Properties.Id.columnName));
+                  contentValues.put(TaskDao.Properties.TaskId.columnName, jsonObject.getInt(Constant.JsonNoteName.TASK_ID));
                   // TODO contentValues.put(MyToDo.Tasks.COLUMN_NAME_IS_DRAFT, 1);
-                  Uri uriUpdateTask = Uri.withAppendedPath(TaskContentProvider.CONTENT_ID_URI, String.valueOf(id));
+                  Uri uriUpdateTask = Uri.withAppendedPath(MiyoteeContentProvider.CONTENT_ID_URI, String.valueOf(id));
                   contentProviderClient.update(uriUpdateTask, contentValues, null, null);
 
                   Log.i(TAG, "Start delete task draft : " + id);
                   Uri uriDeleteTaskDraft = Uri
-                      .withAppendedPath(TaskDraftContentProvider.TASK_DRAFT_CONTENT_ID_URI, String.valueOf(id));
+                      .withAppendedPath(MiyoteeContentProvider.TASK_DRAFT_CONTENT_ID_URI, String.valueOf(id));
                   contentProviderClient.delete(uriDeleteTaskDraft, null, null);
                   Log.i(TAG, "End delete task draft");
 
@@ -242,7 +263,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
               break;
 
             case Constant.TASK_DRAFT_STATUS_UPDATE:
-              String urlUpdateTask = URL_HOST + "update-task.php";
+              String urlUpdateTask = Constant.URL_HOST + "update-task.php";
 
               JSONObject updateTaskResult = NetworkUtils.postJSONObjFromUrl(urlUpdateTask, keys, values);
               // check your log for json response
@@ -256,7 +277,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                 for (int i = 0; i < arrTask.length(); i++) {
                   Log.i(TAG, "Start delete task draft : " + id);
                   Uri uriDeleteTaskDraft = Uri
-                      .withAppendedPath(TaskDraftContentProvider.TASK_DRAFT_CONTENT_ID_URI, String.valueOf(id));
+                      .withAppendedPath(MiyoteeContentProvider.TASK_DRAFT_CONTENT_ID_URI, String.valueOf(id));
                   contentProviderClient.delete(uriDeleteTaskDraft, null, null);
                   Log.i(TAG, "End delete task draft");
                 }
@@ -267,9 +288,11 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
               break;
 
             case Constant.TASK_DRAFT_STATUS_DELETE:
-              String urlDeleteTask = URL_HOST + "delete-task.php";
+              String urlDeleteTask = Constant.URL_HOST + "delete-task.php";
 
-              JSONObject deleteTaskResult = NetworkUtils.postJSONObjFromUrl(urlDeleteTask, keys, values);
+              String[] keysDelete = new String[]{"username", "taskId"};
+              String[] valuesDelete = new String[]{account.name, taskId.toString()};
+              JSONObject deleteTaskResult = NetworkUtils.postJSONObjFromUrl(urlDeleteTask, keysDelete, valuesDelete);
               // check your log for json response
               Log.d("task delete result", deleteTaskResult.toString());
 
@@ -278,7 +301,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
 
               if (!noteError) {
                 Log.i(TAG, "Start delete task draft");
-                Uri uriDeleteTaskDraft = Uri.withAppendedPath(TaskDraftContentProvider.TASK_DRAFT_CONTENT_ID_URI, String.valueOf(id));
+                Uri uriDeleteTaskDraft = Uri.withAppendedPath(MiyoteeContentProvider.TASK_DRAFT_CONTENT_ID_URI, String.valueOf(id));
                 contentProviderClient.delete(uriDeleteTaskDraft, null, null);
                 Log.i(TAG, "End delete task draft");
               } else {

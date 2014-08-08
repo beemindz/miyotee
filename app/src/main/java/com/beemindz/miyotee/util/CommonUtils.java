@@ -22,10 +22,9 @@ public class CommonUtils {
 
   /**
    * Return string date in specified format
-   * 
-   * @param calendar calendar
-   * @param dateFormat
-   *          Date format
+   *
+   * @param calendar   calendar
+   * @param dateFormat Date format
    * @return string date time
    */
   public static String getStringDate(Calendar calendar, String dateFormat) {
@@ -40,10 +39,32 @@ public class CommonUtils {
     return formatter.format(date);
   }
 
+  public static String getStringDate(Long timeMillis, String dateFormat) {
+    // Create a DateFormatter object for displaying date in specified format.
+    Date date = new Date();
+    date.setTime(timeMillis);
+    DateFormat formatter = new SimpleDateFormat(dateFormat);
+    return formatter.format(date);
+  }
+
+  public static Long getTimeMillis(String strDate, String dateFormat) {
+    DateFormat formatter = new SimpleDateFormat(dateFormat);
+
+    try {
+      Date date = formatter.parse(strDate);
+      Calendar calendar = Calendar.getInstance();
+      calendar.setTime(date);
+      return calendar.getTimeInMillis();
+    } catch (ParseException e) {
+      e.printStackTrace();
+      return System.currentTimeMillis();
+    }
+  }
+
   /**
    * Return date in specified format
-   * 
-   * @param strDate date format string
+   *
+   * @param strDate    date format string
    * @param dateFormat date format
    * @return Date
    */
@@ -72,16 +93,16 @@ public class CommonUtils {
     }
     return format;
   }
-  
+
   /**
-   * Confirm delete. 
+   * Confirm delete.
    */
   public static AlertDialog confirmDelete(Context context, OnClickListener yesListener, OnClickListener noListener) {
     return new AlertDialog.Builder(context)
-    .setTitle(context.getResources().getString(R.string.menu_delete))
-    .setMessage(context.getResources().getString(R.string.confirm_delete_task))
-    .setPositiveButton(context.getResources().getString(android.R.string.ok), yesListener)
-    .setNegativeButton(context.getResources().getString(android.R.string.cancel), noListener).create();
+        .setTitle(context.getResources().getString(R.string.menu_delete))
+        .setMessage(context.getResources().getString(R.string.confirm_delete_task))
+        .setPositiveButton(context.getResources().getString(android.R.string.ok), yesListener)
+        .setNegativeButton(context.getResources().getString(android.R.string.cancel), noListener).create();
   }
 
   /**
@@ -107,15 +128,15 @@ public class CommonUtils {
     }
   }
 
-    public static boolean isEmailValid(String email) {
-        String regExpn = "^(([\\w-]+\\.)+[\\w-]+|([a-zA-Z]{1}|[\\w-]{2,}))@"
-                + "((([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?" + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\."
-                + "([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?" + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])){1}|"
-                + "([a-zA-Z]+[\\w-]+\\.)+[a-zA-Z]{2,4})$";
+  public static boolean isEmailValid(String email) {
+    String regExpn = "^(([\\w-]+\\.)+[\\w-]+|([a-zA-Z]{1}|[\\w-]{2,}))@"
+        + "((([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?" + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\."
+        + "([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?" + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])){1}|"
+        + "([a-zA-Z]+[\\w-]+\\.)+[a-zA-Z]{2,4})$";
 
-        Pattern pattern = Pattern.compile(regExpn, Pattern.CASE_INSENSITIVE);
-        Matcher matcher = pattern.matcher(email);
+    Pattern pattern = Pattern.compile(regExpn, Pattern.CASE_INSENSITIVE);
+    Matcher matcher = pattern.matcher(email);
 
-        return matcher.matches();
-    }
+    return matcher.matches();
+  }
 }
