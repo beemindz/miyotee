@@ -40,7 +40,7 @@ import com.google.android.gms.ads.AdView;
 
 import java.util.Calendar;
 
-public class TaskEditorFragment extends Fragment implements View.OnClickListener{
+public class TaskEditorFragment extends Fragment implements View.OnClickListener {
   // For logging and debugging
   private static final String TAG = "TasksEditorActivity";
   final static String ARG_TASK_ID = "TaskId";
@@ -52,7 +52,9 @@ public class TaskEditorFragment extends Fragment implements View.OnClickListener
   private ImageButton btnSelectDate, btnSelectTime;
   private CheckBox cbIsComplete;
   private ToggleButton btnReminder;
-  /** The view to show the ad. */
+  /**
+   * The view to show the ad.
+   */
   private AdView adView;
 
   private static Calendar mCalendar;
@@ -168,7 +170,7 @@ public class TaskEditorFragment extends Fragment implements View.OnClickListener
       etName.setTextKeepState(task.getTaskName().trim());
       etName.setSelection(task.getTaskName().trim().length());
       getActivity().getWindow().setSoftInputMode(android.view.WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-      if(!TextUtils.isEmpty(task.getTaskDescription())) {
+      if (!TextUtils.isEmpty(task.getTaskDescription())) {
         etDescription.setTextKeepState(task.getTaskDescription().trim());
       }
       isReminder = !task.getIsReminder();
@@ -223,7 +225,7 @@ public class TaskEditorFragment extends Fragment implements View.OnClickListener
     });
   }
 
- /*--- EVENT SET REMINDER ON/OFF ---*/
+  /*--- EVENT SET REMINDER ON/OFF ---*/
   private void isShowReminder() {
     if (isReminder) {
       // show set date/time.
@@ -242,7 +244,7 @@ public class TaskEditorFragment extends Fragment implements View.OnClickListener
   @Override
   public void onClick(View view) {
     switch (view.getId()) {
-      case R.id.tgbSetReminder :
+      case R.id.tgbSetReminder:
         isReminder = ((ToggleButton) view).isChecked();
         isShowReminder();
         break;
@@ -282,30 +284,25 @@ public class TaskEditorFragment extends Fragment implements View.OnClickListener
   }
 
   private void updateTask(Task task) {
-      // validate input.
-      int valid = validateInputName(etName.getText().toString());
-      // case: input not correct.
-      if (valid != 0) {
-        return;
-      } else {
-        if (task != null) {
-          task.setTaskName(etName.getText().toString());
-          task.setTaskDescription(etDescription.getText().toString());
-          task.setIsReminder(!btnReminder.isChecked());
-          task.setIsComplete(cbIsComplete.isChecked());
-          task.setIsDueDate(false);
-          task.setDueDate(Calendar.getInstance().getTime());
-          task.setReminderDate(mCalendar.getTime());
-          task.setUpdatedDate(Calendar.getInstance().getTime());
+    // validate input.
+    int valid = validateInputName(etName.getText().toString());
+    // case: input not correct.
+    if (valid != 0) {
+      return;
+    } else {
+      if (task != null) {
+        task.setTaskName(etName.getText().toString());
+        task.setTaskDescription(etDescription.getText().toString());
+        task.setIsReminder(!btnReminder.isChecked());
+        task.setIsComplete(cbIsComplete.isChecked());
+        task.setIsDueDate(false);
+        task.setDueDate(Calendar.getInstance().getTime());
+        task.setReminderDate(mCalendar.getTime());
+        task.setUpdatedDate(Calendar.getInstance().getTime());
 
-          TaskRepository.insertOrUpdate(getActivity(), task);
-        }
+        TaskRepository.insertOrUpdate(getActivity(), task);
       }
-
-    String reminderDate = CommonUtils.getStringDate(mCalendar, Constant.DATE_TIME_FORMAT);
-    java.util.Date reminder = CommonUtils.getDate(reminderDate, Constant.DATE_TIME_FORMAT);
-    Calendar reminderCal = Calendar.getInstance();
-    reminderCal.setTime(reminder);
+    }
 
     if (!isReminder && !cbIsComplete.isChecked() && mCalendar.getTimeInMillis() > System.currentTimeMillis()) {
       new ReminderManager().setReminder(getActivity(), task.getId(), mCalendar,
@@ -334,7 +331,7 @@ public class TaskEditorFragment extends Fragment implements View.OnClickListener
       @Override
       public void onClick(DialogInterface dialog, int which) {
         // your deleting code
-        TaskRepository.deleteTaskWithId(getActivity().getApplicationContext(),mTaskId);
+        TaskRepository.deleteTaskWithId(getActivity().getApplicationContext(), mTaskId);
         dialog.dismiss();
         getActivity().getSupportFragmentManager().popBackStack();
       }
@@ -364,7 +361,7 @@ public class TaskEditorFragment extends Fragment implements View.OnClickListener
       mCalendar.set(yy, mm, dd);
       Log.i(TAG, "Select Date : " + mCalendar.getTime().toString());
 
-      TextView tvDate = (TextView)getActivity().findViewById(R.id.etDate);
+      TextView tvDate = (TextView) getActivity().findViewById(R.id.etDate);
       tvDate.setText(CommonUtils.getStringDate(mCalendar, CommonUtils.getDateFormatSystem(getActivity().getApplicationContext())));
     }
 
@@ -390,7 +387,7 @@ public class TaskEditorFragment extends Fragment implements View.OnClickListener
       mCalendar.set(Calendar.MINUTE, minute);
 
       Log.i(TAG, "Select Time : " + mCalendar.getTime().toString());
-      TextView tvTime = (TextView)getActivity().findViewById(R.id.etTime);
+      TextView tvTime = (TextView) getActivity().findViewById(R.id.etTime);
       tvTime.setText(CommonUtils.getStringDate(mCalendar, Constant.TIME_FORMAT));
     }
   }
