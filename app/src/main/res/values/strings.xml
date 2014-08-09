@@ -34,6 +34,7 @@
     <string name="no_reminders">no reminder</string>
     <string name="task_name">Name</string>
     <string name="task_description">Description</string>
+    <string name="due_date">DUE DATE</string>
     <string name="date">DATE</string>
     <string name="time">TIME</string>
     <string name="task_saved_message">Success</string>

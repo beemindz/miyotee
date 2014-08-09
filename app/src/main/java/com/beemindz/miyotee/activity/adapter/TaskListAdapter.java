@@ -105,15 +105,18 @@ public class TaskListAdapter extends ArrayAdapter<Item> {
 
         Log.d("===width list view====", "" + width + "; length:" + task.getTaskName().trim().length());
 
-        Calendar dueDate = Calendar.getInstance();
-        dueDate.setTime(task.getDueDate());
+        if (task.getDueDate() != null) {
+          Calendar dueDate = Calendar.getInstance();
+          dueDate.setTime(task.getDueDate());
 
-        String dayOfWeekString = getDayOfWeek(dueDate);
+          String dayOfWeekString = getDayOfWeek(dueDate);
+          viewHolder.tvDueDate.setText(dayOfWeekString);
+        }
         //viewHolder.tvTaskName.setIncludeFontPadding(false);
         if (task.getTaskName() != null) {
           viewHolder.tvTaskName.setText(task.getTaskName().trim().toUpperCase());
         }
-        viewHolder.tvDueDate.setText(dayOfWeekString);
+
         if (task.getIsReminder()) {
           viewHolder.imgReminder.setVisibility(View.VISIBLE);
         } else {
@@ -144,27 +147,6 @@ public class TaskListAdapter extends ArrayAdapter<Item> {
     }
 
     return convertView;
-  }
-
-  private String cutStr(int width, String name) {
-
-    if (width == 320 && name.length() > 15) {
-      return String.format("%s ...", name.substring(0, 15));
-    }
-
-    if (width == 480 && name.length() > 25) {
-      return String.format("%s ...", name.substring(0, 25));
-    }
-
-    if ((width == 720 || width == 768) && name.length() > 35) {
-      return String.format("%s ...", name.substring(0, 35));
-    }
-
-    if (width >= 800 && name.length() > 45) {
-      return String.format("%s ...", name.substring(0, 45));
-    }
-
-    return name;
   }
 
   private String getDayOfWeek(Calendar dueDate) {
