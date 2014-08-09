@@ -78,12 +78,13 @@ public class TaskListAdapter extends ArrayAdapter<Item> {
   public View getView(int position, View convertView, ViewGroup parent) {
     // color background.
     int sizeColor = colors.size();
-    int colorPos = position % sizeColor;
+
 
     // get data item task for this position.
     final Item item = tasks.get(position);
     if (item != null) {
       if (!item.isSection()) {
+        int colorPos = position % sizeColor;
         Task task = (Task) item;
         // Check if an existing view is being reused, otherwise inflate the
 
@@ -105,7 +106,7 @@ public class TaskListAdapter extends ArrayAdapter<Item> {
 
         Log.d("===width list view====", "" + width + "; length:" + task.getTaskName().trim().length());
 
-        if (task.getDueDate() != null) {
+        if (task.getIsDueDate() && task.getDueDate() != null) {
           Calendar dueDate = Calendar.getInstance();
           dueDate.setTime(task.getDueDate());
 

@@ -124,8 +124,10 @@ public class TaskRepository {
     List<Item> items = new ArrayList<Item>();
 
     items.addAll(taskNotCompleted);
-    items.add(new SectionItem(context.getResources().getString(R.string.event_completed)));
-    items.addAll(taskCompleted);
+    if (taskCompleted!=null && taskCompleted.size() > 0) {
+      items.add(new SectionItem(context.getResources().getString(R.string.event_completed)));
+      items.addAll(taskCompleted);
+    }
 
     return items;
   }
