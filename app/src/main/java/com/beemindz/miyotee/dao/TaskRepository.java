@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.beemindz.miyotee.MiyoteeApplication;
+import com.beemindz.miyotee.R;
 import com.beemindz.miyotee.activity.adapter.Item;
 import com.beemindz.miyotee.activity.adapter.SectionItem;
 import com.beemindz.miyotee.util.Constant;
@@ -86,8 +87,8 @@ public class TaskRepository {
   }
 
   public static Task getTaskForId(Context context, long id) {
-    return getTaskDao(context).load(id);
-  }
+      return getTaskDao(context).load(id);
+    }
 
   private static TaskDao getTaskDao(Context c) {
     return ((MiyoteeApplication) c.getApplicationContext()).getDaoSession().getTaskDao();
@@ -111,20 +112,19 @@ public class TaskRepository {
   }
 
   public static List<Item> getAllItems(Context context) {
+    List taskCompleted = getTaskDao(context).queryBuilder()
+        .where(TaskDao.Properties.IsComplete.eq(true))
+        .orderDesc(TaskDao.Properties.UpdatedDate)
+        .list();
+    List taskNotCompleted = getTaskDao(context).queryBuilder()
+        .where(TaskDao.Properties.IsComplete.eq(false))
+        .orderDesc(TaskDao.Properties.CreatedDate)
+        .list();
+
     List<Item> items = new ArrayList<Item>();
-    List<Task> tasks = getTaskDao(context).loadAll();
-    List<Task> taskCompleted = new ArrayList<Task>();
-    List<Task> taskNotCompleted = new ArrayList<Task>();
-    for (Task task : tasks) {
-      if (task.getIsComplete()) {
-        taskCompleted.add(task);
-      } else {
-        taskNotCompleted.add(task);
-      }
-    }
 
     items.addAll(taskNotCompleted);
-    items.add(new SectionItem("Event Completed"));
+    items.add(new SectionItem(context.getResources().getString(R.string.event_completed)));
     items.addAll(taskCompleted);
 
     return items;

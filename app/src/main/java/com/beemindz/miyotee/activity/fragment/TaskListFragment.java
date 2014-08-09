@@ -1,13 +1,10 @@
 package com.beemindz.miyotee.activity.fragment;
 
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v7.app.ActionBar;
@@ -16,7 +13,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -166,8 +162,8 @@ public class TaskListFragment extends ListFragment {
   public boolean onContextItemSelected(MenuItem item) {
     AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
     Task task = new Task();
-    if (tasks.size() > 0) {
-      task = tasks.get(info.position);
+    if (items.size() > 0) {
+      task = (Task)items.get(info.position);
     }
 
     switch (item.getItemId()) {

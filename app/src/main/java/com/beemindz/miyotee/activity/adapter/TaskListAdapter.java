@@ -90,13 +90,13 @@ public class TaskListAdapter extends ArrayAdapter<Item> {
         // View lookup cache stored in tag
         ViewHolder viewHolder;
         //if (convertView == null) {
-          viewHolder = new ViewHolder();
-          //LayoutInflater inflater = LayoutInflater.from(context);
-          convertView = inflater.inflate(R.layout.task_list_item, parent, false);
-          viewHolder.tvTaskName = (TextView) convertView.findViewById(R.id.tvTaskName);
-          viewHolder.tvDueDate = (TextView) convertView.findViewById(R.id.tv_due_date);
-          viewHolder.imgReminder = (ImageView) convertView.findViewById(R.id.img_reminder_clock);
-          convertView.setTag(viewHolder);
+        viewHolder = new ViewHolder();
+        //LayoutInflater inflater = LayoutInflater.from(context);
+        convertView = inflater.inflate(R.layout.task_list_item, parent, false);
+        viewHolder.tvTaskName = (TextView) convertView.findViewById(R.id.tvTaskName);
+        viewHolder.tvDueDate = (TextView) convertView.findViewById(R.id.tv_due_date);
+        viewHolder.imgReminder = (ImageView) convertView.findViewById(R.id.img_reminder_clock);
+        convertView.setTag(viewHolder);
         //} else {
         //  viewHolder = (ViewHolder) convertView.getTag();
         //}
@@ -107,13 +107,13 @@ public class TaskListAdapter extends ArrayAdapter<Item> {
 
         Calendar dueDate = Calendar.getInstance();
         dueDate.setTime(task.getDueDate());
-        String dueDateStr = (String) DateFormat.format(CommonUtils.getDateFormatSystem(context), dueDate);
 
+        String dayOfWeekString = getDayOfWeek(dueDate);
         //viewHolder.tvTaskName.setIncludeFontPadding(false);
         if (task.getTaskName() != null) {
-          viewHolder.tvTaskName.setText(cutStr(width, task.getTaskName().trim().toUpperCase()));
+          viewHolder.tvTaskName.setText(task.getTaskName().trim().toUpperCase());
         }
-        viewHolder.tvDueDate.setText(dueDateStr);
+        viewHolder.tvDueDate.setText(dayOfWeekString);
         if (task.getIsReminder()) {
           viewHolder.imgReminder.setVisibility(View.VISIBLE);
         } else {
@@ -165,6 +165,48 @@ public class TaskListAdapter extends ArrayAdapter<Item> {
     }
 
     return name;
+  }
+
+  private String getDayOfWeek(Calendar dueDate) {
+    Calendar today = Calendar.getInstance();
+    String todayStr = (String) DateFormat.format(CommonUtils.getDateFormatSystem(context), today);
+    String dueDateStr = (String) DateFormat.format(CommonUtils.getDateFormatSystem(context), dueDate);
+    int dayOfWeek = 0;
+    int day = dueDate.get(Calendar.DAY_OF_WEEK);
+    if (dueDateStr.equals(todayStr)) {
+      dayOfWeek = R.string.today;
+    } else if (dueDate.getTimeInMillis() > System.currentTimeMillis() &&
+        dueDate.get(Calendar.DAY_OF_MONTH) - today.get(Calendar.DAY_OF_MONTH) == 1 &&
+        dueDate.get(Calendar.MONTH) == today.get(Calendar.MONTH) &&
+        dueDate.get(Calendar.YEAR) == today.get(Calendar.YEAR)) {
+      dayOfWeek = R.string.tomorrow;
+    } else {
+      switch (day) {
+        case Calendar.MONDAY:
+          dayOfWeek = R.string.monday;
+          break;
+        case Calendar.TUESDAY:
+          dayOfWeek = R.string.tuesday;
+          break;
+        case Calendar.WEDNESDAY:
+          dayOfWeek = R.string.wednesday;
+          break;
+        case Calendar.THURSDAY:
+          dayOfWeek = R.string.thursday;
+          break;
+        case Calendar.FRIDAY:
+          dayOfWeek = R.string.friday;
+          break;
+        case Calendar.SATURDAY:
+          dayOfWeek = R.string.saturday;
+          break;
+        case Calendar.SUNDAY:
+          dayOfWeek = R.string.sunday;
+          break;
+      }
+    }
+
+    return String.format("%s, %s", context.getResources().getString(dayOfWeek), dueDateStr);
   }
 
   /**

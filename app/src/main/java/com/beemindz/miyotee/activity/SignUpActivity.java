@@ -1,7 +1,6 @@
 package com.beemindz.miyotee.activity;
 
 import android.accounts.Account;
-import android.accounts.AccountAuthenticatorActivity;
 import android.accounts.AccountManager;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
@@ -11,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.beemindz.miyotee.R;
 import com.beemindz.miyotee.dao.MiyoteeContentProvider;
+import com.beemindz.miyotee.service.authentication.AccountAuthenticatorActivity;
 import com.beemindz.miyotee.util.Constant;
 import com.beemindz.miyotee.util.NetworkUtils;
 import com.beemindz.miyotee.util.ToastUtils;
@@ -47,6 +48,11 @@ public class SignUpActivity extends AccountAuthenticatorActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_sign_up);
+
+    getWindow().setSoftInputMode(android.view.WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    getSupportActionBar().setDisplayShowHomeEnabled(true);
+    getSupportActionBar().setHomeButtonEnabled(true);
 
     signUpName = (EditText) findViewById(R.id.signUpName);
     signUpPassword = (EditText) findViewById(R.id.signUpPassword);
@@ -114,6 +120,16 @@ public class SignUpActivity extends AccountAuthenticatorActivity {
     super.onStop();
     EasyTracker.getInstance(this).activityStop(this);
     Log.i(TAG, "==onStop==");
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem menuItem) {
+    switch (menuItem.getItemId()) {
+      case android.R.id.home:
+        finish();
+        return true;
+    }
+    return (super.onOptionsItemSelected(menuItem));
   }
 
   /**
