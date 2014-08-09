@@ -28,14 +28,14 @@ import java.util.Date;
 
 public class SyncAdapter extends AbstractThreadedSyncAdapter {
 
-  //  private final String URL_HOST = "http://ohoh123.byethost8.com/mytodo/";
+  //TODO REMOVE IsDueDate and IsReminderDate
   // JSON Node names
   public final String TAG_ERROR = "error";
   private final String TAG = "SyncAdapter";
   private final String[] TASK_DRAFT_PROJECTION = new String[]{TaskDraftDao.Properties.Id.columnName,
       TaskDraftDao.Properties.TaskId.columnName, TaskDraftDao.Properties.UserName.columnName, TaskDraftDao.Properties.TaskName.columnName,
       TaskDraftDao.Properties.TaskDescription.columnName, TaskDraftDao.Properties.DueDate.columnName, TaskDraftDao.Properties.ReminderDate.columnName,
-      TaskDraftDao.Properties.IsReminder.columnName, TaskDraftDao.Properties.IsDueDate.columnName, TaskDraftDao.Properties.IsComplete.columnName,
+      TaskDraftDao.Properties.IsComplete.columnName,
       TaskDraftDao.Properties.CreatedDate.columnName, TaskDraftDao.Properties.UpdatedDate.columnName, TaskDraftDao.Properties.Status.columnName};
 
   public SyncAdapter(Context context, boolean autoInitialize) {
@@ -90,8 +90,8 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
             contentValues.put(TaskDao.Properties.TaskName.columnName, jsonObject.getString(Constant.JsonNoteName.TASK_NAME));
             contentValues.put(TaskDao.Properties.TaskDescription.columnName,
                 jsonObject.getString(Constant.JsonNoteName.TASK_DESCRIPTION));
-            contentValues.put(TaskDao.Properties.IsReminder.columnName, jsonObject.getInt(Constant.JsonNoteName.TASK_IS_REMINDER));
-            contentValues.put(TaskDao.Properties.IsDueDate.columnName, jsonObject.getInt(Constant.JsonNoteName.TASK_IS_DUE_DATE));
+//            contentValues.put(TaskDao.Properties.IsReminder.columnName, jsonObject.getInt(Constant.JsonNoteName.TASK_IS_REMINDER));
+//            contentValues.put(TaskDao.Properties.IsDueDate.columnName, jsonObject.getInt(Constant.JsonNoteName.TASK_IS_DUE_DATE));
             contentValues.put(TaskDao.Properties.IsComplete.columnName, jsonObject.getInt(Constant.JsonNoteName.TASK_IS_COMPLETE));
 
             String dueDate = jsonObject.getString(Constant.JsonNoteName.TASK_DUE_DATE);
@@ -200,8 +200,8 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         int colDescriptionIndex = cursor.getColumnIndex(TaskDraftDao.Properties.TaskDescription.columnName);
         int colDueDateIndex = cursor.getColumnIndex(TaskDraftDao.Properties.DueDate.columnName);
         int colReminderIndex = cursor.getColumnIndex(TaskDraftDao.Properties.ReminderDate.columnName);
-        int colIsReminderIndex = cursor.getColumnIndex(TaskDraftDao.Properties.IsReminder.columnName);
-        int colIsDueDateIndex = cursor.getColumnIndex(TaskDraftDao.Properties.IsDueDate.columnName);
+//        int colIsReminderIndex = cursor.getColumnIndex(TaskDraftDao.Properties.IsReminder.columnName);
+//        int colIsDueDateIndex = cursor.getColumnIndex(TaskDraftDao.Properties.IsDueDate.columnName);
         int colIsCompleteIndex = cursor.getColumnIndex(TaskDraftDao.Properties.IsComplete.columnName);
         int colUpdatedDateIndex = cursor.getColumnIndex(TaskDraftDao.Properties.UpdatedDate.columnName);
         int colStatusIndex = cursor.getColumnIndex(TaskDraftDao.Properties.Status.columnName);
@@ -213,13 +213,13 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
           String taskDescription = cursor.getString(colDescriptionIndex);
           String dueDate = CommonUtils.getStringDate(cursor.getLong(colDueDateIndex), Constant.DATE_TIME_FORMAT);
           String reminderDate = CommonUtils.getStringDate(cursor.getLong(colReminderIndex), Constant.DATE_TIME_FORMAT);
-          Long isReminder = cursor.getLong(colIsReminderIndex);
-          Long isDueDate = cursor.getLong(colIsDueDateIndex);
+//          Long isReminder = cursor.getLong(colIsReminderIndex);
+//          Long isDueDate = cursor.getLong(colIsDueDateIndex);
           Long isComplete = cursor.getLong(colIsCompleteIndex);
           String updatedDate = CommonUtils.getStringDate(cursor.getLong(colUpdatedDateIndex), Constant.DATE_TIME_FORMAT);
           Long status = cursor.getLong(colStatusIndex);
 
-          String[] values = new String[]{account.name, taskId.toString(), taskName, taskDescription, dueDate, reminderDate, isReminder.toString(), isDueDate.toString(),
+          String[] values = new String[]{account.name, taskId.toString(), taskName, taskDescription, dueDate, reminderDate, "0", "0",
               isComplete.toString(), updatedDate};
 
           switch (status.intValue()) {

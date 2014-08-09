@@ -2,11 +2,11 @@ package com.beemindz.miyotee.util;
 
 public class Constant {
 
-  public static final String URL_HOST = "http://192.168.1.77/miyotee-service/";
+  public static final String URL_HOST = "http://ohoh123.byethost8.com/api.miyotee/";
   public static final String ACCOUNT_TYPE = "com.beemindz.miyotee";
   public static final String DATE_FORMAT = "yyyy-MM-dd";
   public static final String TIME_FORMAT = "kk:mm";
-  public static final String DATE_TIME_FORMAT = "yyyy-MM-dd kk:mm:ss";
+  public static final String DATE_TIME_FORMAT = "yyyy-MM-dd kk:mm";
   
   public static final int TASK_DRAFT_STATUS_INSERT = 1;
   public static final int TASK_DRAFT_STATUS_UPDATE = 2;

@@ -106,7 +106,7 @@ public class TaskListAdapter extends ArrayAdapter<Item> {
 
         Log.d("===width list view====", "" + width + "; length:" + task.getTaskName().trim().length());
 
-        if (task.getIsDueDate() && task.getDueDate() != null) {
+        if (task.getDueDate() != null) {
           Calendar dueDate = Calendar.getInstance();
           dueDate.setTime(task.getDueDate());
 
@@ -118,7 +118,7 @@ public class TaskListAdapter extends ArrayAdapter<Item> {
           viewHolder.tvTaskName.setText(task.getTaskName().trim().toUpperCase());
         }
 
-        if (task.getIsReminder()) {
+        if (task.getReminderDate() != null) {
           viewHolder.imgReminder.setVisibility(View.VISIBLE);
         } else {
           viewHolder.imgReminder.setVisibility(View.GONE);

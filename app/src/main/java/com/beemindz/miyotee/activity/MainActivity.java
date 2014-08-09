@@ -160,7 +160,7 @@ public class MainActivity extends AccountAuthenticatorActivity {
           return;
         }
 
-        Login login = new Login(MainActivity.this, null, userName, pass, null);
+        Login login = new Login(MainActivity.this, null, userName, pass, "");
         login.execute();
       }
     });

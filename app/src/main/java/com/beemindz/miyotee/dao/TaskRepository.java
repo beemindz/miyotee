@@ -33,34 +33,6 @@ public class TaskRepository {
       Log.d("Insert Task ", "Id : " + id);
       Log.d("Insert Task Draft", "Id : " + idDraft);
 
-      /*
-      //Insert taskDraft with status = update
-      if (idTemp != null) {
-        TaskDraft taskDraft = TaskDraftRepository.getTaskDraftForId(context,idTemp);
-        if (taskDraft != null) {
-          convertToTaskDraft(taskDraft, task);
-          if (task.getTaskId() != null) {
-            taskDraft.setStatus(Constant.TASK_DRAFT_STATUS_UPDATE);
-          } else {
-            taskDraft.setStatus(Constant.TASK_DRAFT_STATUS_INSERT);
-          }
-
-          Long idDraft = TaskDraftRepository.insertOrUpdate(context, taskDraft);
-
-          Log.d("Insert Task Draft", "Id : " + idDraft);
-        }
-        Log.d("Update Task ", "Id : " + idTemp);
-
-      } else { //Insert taskDraft with status = insert
-        TaskDraft taskDraft = new TaskDraft();
-        convertToTaskDraft(taskDraft, task);
-        taskDraft.setId(id);
-        taskDraft.setStatus(Constant.TASK_DRAFT_STATUS_INSERT);
-        Long idDraft = TaskDraftRepository.insertOrUpdate(context, taskDraft);
-        Log.d("Insert Task ", "Id : " + id);
-        Log.d("Insert Task Draft", "Id : " + idDraft);
-      }*/
-
       return id;
     }
     return 0;
@@ -102,8 +74,8 @@ public class TaskRepository {
     taskDraft.setTaskDescription(task.getTaskDescription());
     taskDraft.setDueDate(task.getDueDate());
     taskDraft.setReminderDate(task.getReminderDate());
-    taskDraft.setIsReminder(task.getIsReminder());
-    taskDraft.setIsDueDate(task.getIsDueDate());
+//    taskDraft.setIsReminder(task.getIsReminder());
+//    taskDraft.setIsDueDate(task.getIsDueDate());
     taskDraft.setIsComplete(task.getIsComplete());
     taskDraft.setCreatedDate(task.getCreatedDate());
     taskDraft.setUpdatedDate(task.getUpdatedDate());

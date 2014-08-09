@@ -146,9 +146,8 @@ public class TaskListActivity extends ActionBarActivity
     android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
     fragmentTransaction.replace(R.id.container, TaskEditorFragment.newInstance(taskId));
-    fragmentTransaction.addToBackStack(null);
+    fragmentTransaction.addToBackStack("TaskEditorFragment");
     fragmentTransaction.commit();
-
   }
 
   /**

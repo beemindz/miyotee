@@ -1,18 +1,18 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.beemindz.miyotee.activity.fragment.TaskEditorFragment">
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context="com.beemindz.miyotee.activity.fragment.TaskEditorFragment">
 
   <ScrollView
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="50dp" >
+    android:layout_marginBottom="50dp">
 
     <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:orientation="vertical" >
+      android:orientation="vertical">
 
       <EditText
         android:id="@+id/etName"
@@ -26,9 +26,9 @@
         android:textColor="@android:color/white"
         android:textColorHint="@color/textColorHint"
         android:textSize="30sp"
-        android:textStyle="bold" >
+        android:textStyle="bold">
 
-        <requestFocus />
+        <requestFocus/>
       </EditText>
 
       <EditText
@@ -43,43 +43,14 @@
         android:minLines="5"
         android:scrollbars="vertical"
         android:textColor="@color/White"
-        android:textSize="20sp" />
+        android:textSize="20sp"/>
 
       <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_gravity="center"
-        android:background="@color/BLUE_0093d8" >
-
-        <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_centerVertical="true"
-          android:layout_marginLeft="5dp"
-          android:gravity="left"
-          android:text="@string/tv_task_set_reminder"
-          android:textColor="@android:color/white"
-          android:textStyle="bold" />
-
-        <ToggleButton
-          android:id="@+id/tgbSetReminder"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_alignParentRight="true"
-          android:layout_centerVertical="true"
-          android:background="@color/BLUE_0093d8"
-          android:minHeight="64dip"
-          android:textColor="@android:color/white"
-          android:textStyle="bold" />
-
-      </RelativeLayout>
-
-      <RelativeLayout
-        android:id="@+id/layoutSelectDate"
+        android:id="@+id/layoutDueDate"
         android:layout_width="fill_parent"
         android:layout_height="60dp"
-        android:background="@color/BLUE_0072bc"
-        android:gravity="center" >
+        android:background="@color/BLUE_0093d8"
+        android:gravity="center">
 
         <TextView
           android:id="@+id/textView1"
@@ -88,12 +59,12 @@
           android:layout_alignParentLeft="true"
           android:layout_centerVertical="true"
           android:layout_marginLeft="5dp"
-          android:text="@string/date"
+          android:text="DUE DATE"
           android:textColor="@android:color/white"
-          android:textStyle="bold" />
+          android:textStyle="bold"/>
 
         <TextView
-          android:id="@+id/etDate"
+          android:id="@+id/tvDueDate"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_centerVertical="true"
@@ -111,7 +82,7 @@
           android:layout_alignParentRight="true"
           android:layout_centerVertical="true"
           android:src="@drawable/ic_date_picker"
-          android:background="@color/BLUE_0072bc"
+          android:background="@color/BLUE_0093d8"
           android:minHeight="64dip"
           android:minWidth="64dip"
           android:contentDescription="@string/app_name"/>
@@ -119,11 +90,11 @@
       </RelativeLayout>
 
       <RelativeLayout
-        android:id="@+id/layoutSelectTime"
+        android:id="@+id/layoutReminderDate"
         android:layout_width="fill_parent"
         android:layout_height="60dp"
-        android:background="@color/BLUE_005ead"
-        android:gravity="center" >
+        android:background="@color/BLUE_0072bc"
+        android:gravity="center">
 
         <TextView
           android:id="@+id/textView2"
@@ -132,12 +103,12 @@
           android:layout_alignParentLeft="true"
           android:layout_centerVertical="true"
           android:layout_marginLeft="5dp"
-          android:text="@string/time"
+          android:text="REMINDER DATE"
           android:textColor="@android:color/white"
-          android:textStyle="bold" />
+          android:textStyle="bold"/>
 
         <TextView
-          android:id="@+id/etTime"
+          android:id="@+id/tvReminderDate"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_centerVertical="true"
@@ -155,7 +126,7 @@
           android:layout_alignParentRight="true"
           android:layout_centerVertical="true"
           android:src="@drawable/ic_time_picker"
-          android:background="@color/BLUE_005ead"
+          android:background="@color/BLUE_0072bc"
           android:minHeight="64dip"
           android:minWidth="64dip"
           android:contentDescription="@string/app_name"/>
@@ -166,7 +137,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:gravity="center"
-        android:background="@color/BLUE_014fa3" >
+        android:background="@color/BLUE_005ead">
 
         <TextView
           android:layout_width="wrap_content"
@@ -177,7 +148,7 @@
           android:gravity="left"
           android:text="@string/tv_task_set_complete"
           android:textColor="@android:color/white"
-          android:textStyle="bold" />
+          android:textStyle="bold"/>
 
         <CheckBox
           android:id="@+id/cbComplete"
@@ -193,18 +164,18 @@
       <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="60dp"
-        android:background="@color/BLUE_223f99"
+        android:background="@color/BLUE_014fa3"
         android:gravity="center"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
         <Button
           android:id="@+id/btnDeleteTask"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:background="@color/BLUE_223f99"
+          android:background="@color/BLUE_014fa3"
           android:drawableLeft="@drawable/ic_delete"
           android:text="@string/menu_delete"
-          android:textColor="@android:color/white" />
+          android:textColor="@android:color/white"/>
       </LinearLayout>
     </LinearLayout>
   </ScrollView>
@@ -214,7 +185,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
-    android:orientation="vertical" >
+    android:orientation="vertical">
   </LinearLayout>
 
 </FrameLayout>

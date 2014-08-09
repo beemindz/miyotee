@@ -94,6 +94,17 @@ public class CommonUtils {
     return format;
   }
 
+  public static String getDateTimeFormatSystem(Context context) {
+    String format = Settings.System.getString(context.getContentResolver(), Settings.System.DATE_FORMAT);
+    if (TextUtils.isEmpty(format)) {
+      format = Constant.DATE_TIME_FORMAT;
+    } else {
+      format = format + " " + Constant.TIME_FORMAT;
+    }
+    return format;
+  }
+
+
   /**
    * Confirm delete.
    */
@@ -128,15 +139,15 @@ public class CommonUtils {
     }
   }
 
-    public static boolean isEmailValid(String email) {
-        String regex = "^(([\\w-]+\\.)+[\\w-]+|([a-zA-Z]{1}|[\\w-]{2,}))@"
-                + "((([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?" + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\."
-                + "([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?" + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])){1}|"
-                + "([a-zA-Z]+[\\w-]+\\.)+[a-zA-Z]{2,4})$";
+  public static boolean isEmailValid(String email) {
+    String regex = "^(([\\w-]+\\.)+[\\w-]+|([a-zA-Z]{1}|[\\w-]{2,}))@"
+        + "((([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?" + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\."
+        + "([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?" + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])){1}|"
+        + "([a-zA-Z]+[\\w-]+\\.)+[a-zA-Z]{2,4})$";
 
-        Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
-        Matcher matcher = pattern.matcher(email);
+    Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+    Matcher matcher = pattern.matcher(email);
 
-        return matcher.matches();
-    }
+    return matcher.matches();
+  }
 }
