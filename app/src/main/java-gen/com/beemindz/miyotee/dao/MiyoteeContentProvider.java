@@ -73,7 +73,7 @@ public class MiyoteeContentProvider extends ContentProvider {
   @Override
   public boolean onCreate() {
     if (daoSession == null) {
-      DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(getContext(), "miyotee-db", null);
+      DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(getContext(), "mytodo.db", null);
       SQLiteDatabase db = helper.getWritableDatabase();
       DaoMaster daoMaster = new DaoMaster(db);
       daoSession = daoMaster.newSession();
