@@ -1,141 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Miyotee Beta</string>
-    <string name="hello_world">Hello world</string>
-    <string name="title_activity_task_list">DANH SÁCH CÔNG VIỆC</string>
-    <string name="title_activity_task_editor">CHI TIẾT CÔNG VIỆC</string>
-    <string name="title_activity_sign_up">ĐĂNG KÝ</string>
-    <string name="title_activity_sign_in">ĐĂNG NHẬP</string>
-    <string name="no_data">Create reminder to me can remind you!!!</string>
-    <string name="send">Gửi</string>
-    <string name="event_completed">Sự kiện hoàn thành</string>
-    <string name="today">Hôm nay</string>
-    <string name="tomorrow">Ngày mai</string>
-    <string name="sunday">Chủ nhật</string>
-    <string name="monday">Thứ 2</string>
-    <string name="tuesday">Thứ 3</string>
-    <string name="wednesday">Thứ 4</string>
-    <string name="thursday">Thứ 5</string>
-    <string name="friday">Thứ 6</string>
-    <string name="saturday">Thứ 7</string>
+  <string name="app_name">Miyotee Beta</string>
+  <string name="hello_world">Hello world</string>
+  <string name="title_activity_task_list">DANH SÁCH CÔNG VIỆC</string>
+  <string name="title_activity_task_editor">CHI TIẾT CÔNG VIỆC</string>
+  <string name="title_activity_sign_up">ĐĂNG KÝ</string>
+  <string name="title_activity_sign_in">ĐĂNG NHẬP</string>
+  <string name="no_data">Create reminder to me can remind you!!!</string>
+  <string name="send">Gửi</string>
+  <string name="event_completed">Sự kiện hoàn thành</string>
+  <string name="today">Hôm nay</string>
+  <string name="tomorrow">Ngày mai</string>
+  <string name="sunday">Chủ nhật</string>
+  <string name="monday">Thứ 2</string>
+  <string name="tuesday">Thứ 3</string>
+  <string name="wednesday">Thứ 4</string>
+  <string name="thursday">Thứ 5</string>
+  <string name="friday">Thứ 6</string>
+  <string name="saturday">Thứ 7</string>
 
-    <!-- LAYOUT LOGIN -->
-    <string name="username">Email</string>
-    <string name="password">Mật khẩu</string>
-    <string name="fullname">Họ và tên</string>
-    <string name="login">Đăng nhập</string>
-    <string name="register">Đăng ký</string>
-    <string name="link_to_register_screen">Bạn đã có tài khoản chưa? Đăng ký ngay!</string>
-    <string name="link_to_login_screen">Bạn đã thực sự có tài khoản? Đăng nhập!</string>
-    <string name="link_open_forgot_pass_dialog">Bạn đã quên mật khẩu?</string>
+  <!-- LAYOUT LOGIN -->
+  <string name="username">Email</string>
+  <string name="password">Mật khẩu</string>
+  <string name="fullname">Họ và tên</string>
+  <string name="login">Đăng nhập</string>
+  <string name="register">Đăng ký</string>
+  <string name="link_to_register_screen">Bạn đã có tài khoản chưa? Đăng ký ngay!</string>
+  <string name="link_to_login_screen">Bạn đã thực sự có tài khoản? Đăng nhập!</string>
+  <string name="link_open_forgot_pass_dialog">Bạn đã quên mật khẩu?</string>
 
-    <!-- LAYOUT TASK EDITOR -->
-    <string name="no_reminders">no reminder</string>
-    <string name="task_name">Tên công việc</string>
-    <string name="task_description">Mô tả công việc</string>
-    <string name="due_date">NGÀY HOÀN THÀNH</string>
-    <string name="date">NGÀY</string>
-    <string name="time">THỜI GIAN</string>
-    <string name="task_saved_message">Thành công</string>
+  <!-- LAYOUT TASK EDITOR -->
+  <string name="no_reminders">no reminder</string>
+  <string name="task_name">Tên công việc</string>
+  <string name="task_description">Mô tả công việc</string>
+  <string name="due_date">NGÀY HOÀN THÀNH</string>
+  <string name="date">NGÀY</string>
+  <string name="time">THỜI GIAN</string>
+  <string name="task_saved_message">Thành công</string>
 
-    <!-- MENU -->
-    <string name="menu_insert">Thêm mới</string>
-    <string name="menu_open">Chi tiết</string>
-    <string name="menu_delete">Xóa</string>
-    <string name="menu_edit">Cập nhật</string>
-    <string name="menu_save">Lưu</string>
-    <string name="menu_sign_out">Đăng xuất</string>
+  <!-- MENU -->
+  <string name="menu_insert">Thêm mới</string>
+  <string name="menu_open">Chi tiết</string>
+  <string name="menu_delete">Xóa</string>
+  <string name="menu_edit">Cập nhật</string>
+  <string name="menu_save">Lưu</string>
+  <string name="menu_sign_out">Đăng xuất</string>
 
-    <!-- TOAST MESSAGE -->
-    <string name="toast_err_login_username_required">Vui lòng nhập email!</string>
-    <string name="toast_err_login_pass_required">Vui lòng nhập mật khẩu!</string>
-    <string name="toast_err_task_name_required">Vui lòng nhập tên công việc!</string>
-    <string name="toast_err_task_description_required">Vui lòng nhập nội dung công việc!</string>
-    <string name="toast_err_task_date_time_required">Vui lòng chọn ngày và giờ!</string>
-    <string name="toast_msg_task_delete_success">Xóa thành công.</string>
-    <string name="toast_msg_task_delete_failed">Xóa thất bại.</string>
-    <string name="toast_msg_reminder_snooze"><b>%1$s</b> sẽ báo lại trong %2$d phút nữa.</string>
-    <string name="toast_err_forgot_pass_email_required">Vui lòng nhập địa chỉ email!</string>
-    <string name="toast_err_system">Lỗi hệ thống!</string>
-    <string name="toast_err_forgot_pass_send_email_succes">Bạn sẽ nhận được một email trong vài phút nữa!</string>
-    <string name="toast_err_email_invalid">Email sai định dạng? ví dụ:youemail@domain.com</string>
-    <string name="toast_err_email_or_pass_incorrect">Đăng nhập thất bại. Email hoặc mật khẩu không đúng.</string>
+  <!-- TOAST MESSAGE -->
+  <string name="toast_err_login_username_required">Vui lòng nhập email!</string>
+  <string name="toast_err_login_pass_required">Vui lòng nhập mật khẩu!</string>
+  <string name="toast_err_task_name_required">Vui lòng nhập tên công việc!</string>
+  <string name="toast_err_task_description_required">Vui lòng nhập nội dung công việc!</string>
+  <string name="toast_err_task_date_time_required">Vui lòng chọn ngày và giờ!</string>
+  <string name="toast_msg_task_delete_success">Xóa thành công.</string>
+  <string name="toast_msg_task_delete_failed">Xóa thất bại.</string>
+  <string name="toast_msg_reminder_snooze"><b>%1$s</b> sẽ báo lại trong %2$d phút nữa.</string>
+  <string name="toast_err_forgot_pass_email_required">Vui lòng nhập địa chỉ email!</string>
+  <string name="toast_err_system">Lỗi hệ thống!</string>
+  <string name="toast_err_forgot_pass_send_email_succes">Bạn sẽ nhận được một email trong vài phút nữa!</string>
+  <string name="toast_err_email_invalid">Email sai định dạng? ví dụ:youemail@domain.com</string>
+  <string name="toast_err_email_or_pass_incorrect">Đăng nhập thất bại. Email hoặc mật khẩu không đúng.</string>
 
-    <!-- EDIT TEXT -->
-    <string name="et_hint_task_title">Thêm một sự kiện&#8230;</string>
+  <!-- EDIT TEXT -->
+  <string name="et_hint_task_title">Thêm một sự kiện&#8230;</string>
 
-    <!-- TEXT VIEW -->
-    <string name="tv_task_not_reminder">Never to limit.</string>
-    <string name="tv_task_set_reminder">NHẮC NHỞ</string>
-    <string name="tv_about_content">Content about</string>
-    <string name="tv_task_set_complete">HOÀN THÀNH</string>
-
-
-    <!-- NAVIGATION MENU -->
-    <string name="drawer_open">Open navigation dra</string>
-    <string name="drawer_close">Close navigation drawer</string>
-    <string name="sign_up_to_sync">Sign up to sign</string>
-    <string name="drawer_action_sync">Sync</string>
-    <string name="drawer_action_signout">Sign out</string>
-    <string name="item_sign_in_to_sync">Sign in to sync</string>
-    <string name="fb_app_id">1488369631406409</string>
-    <string name="setting">Setting</string>
-    <string name="like_us_fb">Like us on Facebook</string>
-
-    <!-- Confirm dialog delete -->
-    <string name="confirm_delete_task">Bạn có chắc chắn muốn xóa?</string>
-
-    <!-- Dialog reminder -->
-    <string name="dialog_reminder_title">Miyotee Reminder</string>
-    <string name="dialog_reminder_btn_snooze">BÁO LẠI</string>
-    <string name="dialog_reminder_btn_stop">DỪNG</string>
-
-    <!-- ABOUT ACTIVITY -->
-    <string name="name_about">GIỚI THIỆU</string>
-    <string name="tv_app_name">MIYOTEE</string>
-    <string name="tv_version">Version 1.0.2</string>
-    <string name="tv_fb_address">https://www.facebook.com/miyoteeapp</string>
-    <string name="tv_tw_address">https://www.twitter.com/miyoteeapp</string>
-    <string name="tv_website_address">http://www.miyotee.com</string>
-    <string name="tv_about_copyright">&#169;2014 Beemindz.com</string>
-
-    <!-- CONFIG ADMOD -->
-    <string name="admod_unit_id">ca-app-pub-8021202070896817/5741420082</string>
-    <string name="admod_unit_name">Bottom Banner</string>
+  <!-- TEXT VIEW -->
+  <string name="tv_task_not_reminder">Never to limit.</string>
+  <string name="tv_task_set_reminder">NHẮC NHỞ</string>
+  <string name="tv_about_content">Content about</string>
+  <string name="tv_task_set_complete">HOÀN THÀNH</string>
 
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+  <!-- NAVIGATION MENU -->
+  <string name="drawer_open">Open navigation dra</string>
+  <string name="drawer_close">Close navigation drawer</string>
+  <string name="sign_up_to_sync">Sign up to sign</string>
+  <string name="drawer_action_sync">Sync</string>
+  <string name="drawer_action_signout">Sign out</string>
+  <string name="item_sign_in_to_sync">Sign in to sync</string>
+  <string name="fb_app_id">1488369631406409</string>
+  <string name="setting">Setting</string>
+  <string name="like_us_fb">Like us on Facebook</string>
 
-    <string name="title_activity_list">Danh sách</string>
-    <string name="title_about">Giới thiệu</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="action_example">Example action</string>
+  <!-- Confirm dialog delete -->
+  <string name="confirm_delete_task">Bạn có chắc chắn muốn xóa?</string>
 
-    <!-- SETTING -->
-    <string name="pref_key_auto_vibrator_summary">Thiết lập rung</string>
-    <string name="pref_key_auto_vibrator_title">Báo rung</string>
-    <string name="pref_key_snooze_minute_summary">Thiết lập báo lại (phút)</string>
-    <string name="pref_key_snooze_minute_title">Báo lại</string>
-    <string name="pref_category_sync_title">Đồng bộ</string>
-    <string name="pref_category_sync_summary">Đăng nhập để đồng bộ</string>
-    <string name="pref_category_sync_signIn_title">Đăng nhập</string>
-    <string name="pref_category_sync_signOut_title">Đăng xuất</string>
-    <string name="setting_confirm_title_sign_out">Đăng xuất</string>
-    <string name="setting_confirm_message_sign_out">Bạn có muốn đăng xuất?</string>
+  <!-- Dialog reminder -->
+  <string name="dialog_reminder_title">Miyotee Reminder</string>
+  <string name="dialog_reminder_btn_snooze">BÁO LẠI</string>
+  <string name="dialog_reminder_btn_stop">DỪNG</string>
 
-    <!-- DIALOG FORGOT PASSWORD -->
-    <string name="dialog_forgot_pass_title">Bạn quên mật khẩu?</string>
-    <string name="dialog_forgot_pass_tv_username_email">Email</string>
+  <!-- ABOUT ACTIVITY -->
+  <string name="name_about">GIỚI THIỆU</string>
+  <string name="tv_app_name">MIYOTEE</string>
+  <string name="tv_version">Version 1.0.2</string>
+  <string name="tv_fb_address">https://www.facebook.com/miyoteeapp</string>
+  <string name="tv_tw_address">https://www.twitter.com/miyoteeapp</string>
+  <string name="tv_website_address">http://www.miyotee.com</string>
+  <string name="tv_about_copyright">&#169;2014 Beemindz.com</string>
 
-    <!-- CONTENT EMAIL -->
-    <string name="email_forgot_pass_title">[Miyotee] - User forgot password</string>
-    <string name="email_forgot_pass_content">You are forgot password. Your password is 123456. Please change password!</string>
+  <!-- CONFIG ADMOD -->
+  <string name="admod_unit_id">ca-app-pub-8021202070896817/5741420082</string>
+  <string name="admod_unit_name">Bottom Banner</string>
 
-    <!-- CHANGE PASSWORD -->
-    <string name="change_pass_title">Thay đổi mật khẩu</string>
-    <string name="change_pass_repassword">Nhập lại mật khẩu</string>
+
+  <string name="hello_blank_fragment">Hello blank fragment</string>
+
+  <string name="title_activity_list">Danh sách</string>
+  <string name="title_about">Giới thiệu</string>
+  <string name="title_section2">Section 2</string>
+  <string name="title_section3">Section 3</string>
+  <string name="navigation_drawer_open">Open navigation drawer</string>
+  <string name="navigation_drawer_close">Close navigation drawer</string>
+  <string name="action_example">Example action</string>
+
+  <!-- SETTING -->
+  <string name="pref_key_auto_vibrator_summary">Thiết lập rung</string>
+  <string name="pref_key_auto_vibrator_title">Báo rung</string>
+  <string name="pref_key_snooze_minute_summary">Thiết lập báo lại (phút)</string>
+  <string name="pref_key_snooze_minute_title">Báo lại</string>
+  <string name="pref_category_sync_title">Đồng bộ</string>
+  <string name="pref_category_sync_summary">Đăng nhập để đồng bộ</string>
+  <string name="pref_category_sync_signIn_title">Đăng nhập</string>
+  <string name="pref_category_sync_signOut_title">Đăng xuất</string>
+  <string name="setting_confirm_title_sign_out">Đăng xuất</string>
+  <string name="setting_confirm_message_sign_out">Bạn có muốn đăng xuất?</string>
+
+  <!-- DIALOG FORGOT PASSWORD -->
+  <string name="dialog_forgot_pass_title">Bạn quên mật khẩu?</string>
+  <string name="dialog_forgot_pass_tv_username_email">Email</string>
+
+  <!-- CONTENT EMAIL -->
+  <string name="email_forgot_pass_title">[Miyotee] - User forgot password</string>
+  <string name="email_forgot_pass_content">You are forgot password. Your password is 123456. Please change password!</string>
+
+  <!-- CHANGE PASSWORD -->
+  <string name="change_pass_title">Thay đổi mật khẩu</string>
+  <string name="change_pass_repassword">Nhập lại mật khẩu</string>
+
+  <!-- DIALOG -->
+  <string name="button_save">Lưu lại</string>
+  <string name="button_remove">Xóa</string>
 </resources>

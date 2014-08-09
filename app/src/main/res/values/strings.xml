@@ -138,4 +138,9 @@
     <!-- CHANGE PASSWORD -->
     <string name="change_pass_title">Change Password</string>
     <string name="change_pass_repassword">Re-Passwrod</string>
+
+  <!-- DIALOG -->
+  <string name="button_save">Save</string>
+  <string name="button_remove">Remove</string>
 </resources>
+

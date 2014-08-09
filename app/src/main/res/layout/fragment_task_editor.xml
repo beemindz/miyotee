@@ -59,7 +59,7 @@
           android:layout_alignParentLeft="true"
           android:layout_centerVertical="true"
           android:layout_marginLeft="5dp"
-          android:text="DUE DATE"
+          android:text="@string/due_date"
           android:textColor="@android:color/white"
           android:textStyle="bold"/>
 
@@ -103,7 +103,7 @@
           android:layout_alignParentLeft="true"
           android:layout_centerVertical="true"
           android:layout_marginLeft="5dp"
-          android:text="REMINDER DATE"
+          android:text="@string/tv_task_set_reminder"
           android:textColor="@android:color/white"
           android:textStyle="bold"/>
 
