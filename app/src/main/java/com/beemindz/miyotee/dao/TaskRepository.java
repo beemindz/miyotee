@@ -4,8 +4,11 @@ import android.content.Context;
 import android.util.Log;
 
 import com.beemindz.miyotee.MiyoteeApplication;
+import com.beemindz.miyotee.activity.adapter.Item;
+import com.beemindz.miyotee.activity.adapter.SectionItem;
 import com.beemindz.miyotee.util.Constant;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
@@ -107,4 +110,23 @@ public class TaskRepository {
     return taskDraft;
   }
 
+  public static List<Item> getAllItems(Context context) {
+    List<Item> items = new ArrayList<Item>();
+    List<Task> tasks = getTaskDao(context).loadAll();
+    List<Task> taskCompleted = new ArrayList<Task>();
+    List<Task> taskNotCompleted = new ArrayList<Task>();
+    for (Task task : tasks) {
+      if (task.getIsComplete()) {
+        taskCompleted.add(task);
+      } else {
+        taskNotCompleted.add(task);
+      }
+    }
+
+    items.addAll(taskNotCompleted);
+    items.add(new SectionItem("Event Completed"));
+    items.addAll(taskCompleted);
+
+    return items;
+  }
 }

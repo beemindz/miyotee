@@ -2,17 +2,37 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
-    android:layout_height="match_parent"
+    android:layout_height="60dp"
     android:layout_marginTop="-5dp"
-    android:orientation="horizontal" >
+    android:orientation="horizontal"
+    android:background="@android:color/black">
 
     <TextView
         android:id="@+id/tvTaskName"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:gravity="center_vertical|center"
         android:textColor="@android:color/white"
         android:textSize="20sp"
-        android:textStyle="bold" />
+        android:layout_marginTop="10sp"
+        android:textStyle="bold"
+        android:text="Item"/>
+    <TextView
+        android:id="@+id/tv_due_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical|center"
+        android:textColor="@android:color/white"
+        android:layout_below="@+id/tvTaskName"
+        android:text="sunday"/>
+    <ImageView
+        android:id="@+id/img_reminder_clock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/icon_alarm_clock"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="8sp"
+        android:gravity="center_vertical|center"/>
 
 </RelativeLayout>

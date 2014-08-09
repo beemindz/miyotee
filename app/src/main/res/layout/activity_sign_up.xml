@@ -1,96 +1,110 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="${relativePackage}.${activityClass}" >
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="${relativePackage}.${activityClass}">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="10dip" >
+        android:layout_height="match_parent">
 
-        <!-- View Title Label -->
-
-        <TextView
-            android:layout_width="fill_parent"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:text="@+string/login"
-            android:textSize="25sp"
-            android:textStyle="bold" />
-        <!-- Email Label -->
+            android:orientation="vertical"
+            android:padding="10dip">
 
-        <!-- Fullname Label -->
+            <!-- Email Label -->
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@+string/fullname"
+                android:textColor="@color/GREEN_00a550"/>
+            <!-- Fullname TextField -->
 
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@+string/fullname" />
-        <!-- Fullname TextField -->
+            <EditText
+                android:id="@+id/signUpFullName"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"/>
 
-        <EditText
-            android:id="@+id/signUpFullName"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text" />
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@+string/username"
+                android:textColor="@color/GREEN_00a550"/>
+            <!-- Email TextField -->
 
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@+string/username" />
-        <!-- Email TextField -->
+            <EditText
+                android:id="@+id/signUpName"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"/>
 
-        <EditText
-            android:id="@+id/signUpName"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text" />
+            <!-- Password Label -->
 
-        <!-- Password Label -->
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/password"
+                android:textColor="@color/GREEN_00a550"/>
+            <!-- Password TextField -->
 
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/password" />
-        <!-- Password TextField -->
+            <EditText
+                android:id="@+id/signUpPassword"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"/>
 
-        <EditText
-            android:id="@+id/signUpPassword"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword" />
+            <!-- Error message -->
 
-        <!-- Error message -->
+            <TextView
+                android:id="@+id/signUpError"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dip"
+                android:textColor="#e30000"
+                android:textStyle="bold"/>
 
-        <TextView
-            android:id="@+id/signUpError"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dip"
-            android:textColor="#e30000"
-            android:textStyle="bold" />
+            <!-- Login Button -->
 
-        <!-- Login Button -->
+            <Button
+                android:id="@+id/btnRegister"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dip"
+                android:background="@color/GREEN_00a550"
+                android:text="@string/register"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"/>
 
-        <Button
-            android:id="@+id/btnRegister"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dip"
-            android:text="@string/register" />
+            <!-- Link to Registration Screen -->
 
-        <!-- Link to Registration Screen -->
+            <Button
+                android:id="@+id/btnLinkToLoginScreen"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dip"
+                android:background="@null"
+                android:text="@string/link_to_login_screen"
+                android:textColor="@color/GREEN_00a550"
+                android:textSize="13sp"/>
 
-        <Button
-            android:id="@+id/btnLinkToLoginScreen"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dip"
-            android:background="@null"
-            android:text="@string/link_to_login_screen"
-            android:textColor="#21dbd4"
-            android:textStyle="bold" />
-    </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="1"
+                android:gravity="center|bottom"
+                android:orientation="vertical">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|center"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/tv_about_copyright"
+                    android:textColor="@color/GREEN_00a550"/>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 </RelativeLayout>

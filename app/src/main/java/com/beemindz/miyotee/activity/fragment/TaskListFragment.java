@@ -22,6 +22,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.beemindz.miyotee.R;
+import com.beemindz.miyotee.activity.adapter.Item;
 import com.beemindz.miyotee.activity.adapter.TaskListAdapter;
 import com.beemindz.miyotee.dao.Task;
 import com.beemindz.miyotee.dao.TaskRepository;
@@ -37,7 +38,7 @@ public class TaskListFragment extends ListFragment {
   private EditText etTitle;
   private ImageButton btnAddTask;
   private ListView listView;
-  private List<Task> tasks;
+  private List<Item> items;
 
   private OnTaskSelectedListener mListener;
 
@@ -48,8 +49,7 @@ public class TaskListFragment extends ListFragment {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    tasks = new ArrayList<Task>();
-
+    items = new ArrayList<Item>();
   }
 
   /**
@@ -152,8 +152,10 @@ public class TaskListFragment extends ListFragment {
   @Override
   public void onListItemClick(ListView l, View v, int position, long id) {
 
-    if(tasks.size() > 0) {
-      mListener.onTaskSelected(tasks.get(position).getId());
+    if(items.size() > 0) {
+      if (!items.get(position).isSection()) {
+        mListener.onTaskSelected(((Task) items.get(position)).getId());
+      }
     }
     getListView().setItemChecked(position, true);
   }
@@ -162,9 +164,8 @@ public class TaskListFragment extends ListFragment {
    * Update list view adapter
    */
   public void updateAdapter() {
-    this.tasks = TaskRepository.getAllTasks(getActivity());
-    TaskListAdapter adapter = new TaskListAdapter(getActivity(), tasks);
+    items = TaskRepository.getAllItems(getActivity());
+    TaskListAdapter adapter = new TaskListAdapter(getActivity(), items);
     listView.setAdapter(adapter);
-
   }
 }

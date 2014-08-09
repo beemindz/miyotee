@@ -14,6 +14,15 @@
             android:orientation="vertical"
             android:padding="10dip" >
 
+            <com.facebook.widget.LoginButton
+                android:id="@+id/btnFbLogin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_gravity="center_horizontal"
+                android:text="Login Button" />
+
+
             <!-- View Title Label -->
 
             <TextView
@@ -29,6 +38,7 @@
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/GREEN_00a550"
                 android:text="@+string/username" />
             <!-- Email TextField -->
 
@@ -44,6 +54,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
+                android:textColor="@color/GREEN_00a550"
                 android:text="@string/password" />
             <!-- Password TextField -->
 
@@ -69,35 +80,48 @@
                 android:id="@+id/btnLogin"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dip"
+                android:layout_marginTop="10dip"
+                android:background="@color/GREEN_00a550"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
                 android:text="@string/login" />
 
             <!-- Link to Registration Screen -->
-
-            <com.facebook.widget.LoginButton
-                android:id="@+id/btnFbLogin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Login Button" />
 
             <Button
                 android:id="@+id/btnLinkToRegisterScreen"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dip"
+                android:layout_marginTop="10dip"
                 android:background="@null"
+                android:textSize="13sp"
                 android:text="@string/link_to_register_screen"
-                android:textColor="#21dbd4"
-                android:textStyle="bold" />
+                android:textColor="@color/GREEN_00a550" />
 
             <Button
                 android:id="@+id/btnLinkToForgotPassDialog"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
+                android:textSize="13sp"
                 android:text="@string/link_open_forgot_pass_dialog"
-                android:textColor="#21dbd4"
-                android:textStyle="bold" />
+                android:textColor="@color/GREEN_00a550" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="1"
+                android:gravity="center|bottom"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|center"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/tv_about_copyright"
+                    android:textColor="@color/GREEN_00a550"/>
+            </LinearLayout>
         </LinearLayout>
         </ScrollView>
     </RelativeLayout>
