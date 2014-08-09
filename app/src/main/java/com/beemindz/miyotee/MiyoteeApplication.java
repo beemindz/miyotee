@@ -19,7 +19,7 @@ public class MiyoteeApplication extends Application {
   }
 
   private void setupDatabase() {
-    DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "miyotee-db", null);
+    DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "mytodo.db", null);
     SQLiteDatabase db = helper.getWritableDatabase();
     DaoMaster daoMaster = new DaoMaster(db);
     daoSession = daoMaster.newSession();
