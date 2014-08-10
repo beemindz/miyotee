@@ -22,4 +22,11 @@
         android:summary="@string/pref_key_snooze_minute_summary"
         android:title="@string/pref_key_snooze_minute_title" />
 
+    <Preference
+        android:enabled="true"
+        android:key="pref_key_change_pass"
+        android:summary="@string/pref_change_pass_summary"
+        android:title="@string/pref_change_pass_title" >
+    </Preference>
+
 </PreferenceScreen>

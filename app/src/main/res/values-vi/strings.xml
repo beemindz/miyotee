@@ -50,6 +50,7 @@
     <!-- TOAST MESSAGE -->
     <string name="toast_err_login_username_required">Vui lòng nhập email!</string>
     <string name="toast_err_login_pass_required">Vui lòng nhập mật khẩu!</string>
+    <string name="toast_err_login_re_pass_same_pass">Nhập lại mật khẩu phải trùng với Mật khẩu mới!</string>
     <string name="toast_err_task_name_required">Vui lòng nhập tên công việc!</string>
     <string name="toast_err_task_description_required">Vui lòng nhập nội dung công việc!</string>
     <string name="toast_err_task_date_time_required">Vui lòng chọn ngày và giờ!</string>
@@ -143,4 +144,9 @@
     <!-- DIALOG -->
     <string name="button_save">Lưu lại</string>
     <string name="button_remove">Xóa</string>
+
+    <!--CHANGE PASSWORD-->
+    <string name="old_password">Mật khẩu cũ</string>
+    <string name="new_password">Mật khẩu mới</string>
+    <string name="re_new_password">Nhập lại mật khẩu mới</string>
 </resources>

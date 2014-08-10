@@ -12,6 +12,7 @@ public class SettingActivity extends ActionBarActivity {
   public static final String KEY_PREF_VIBRATOR = "pref_key_vibrator";
   public static final String KEY_PREF_SNOOZE_MINUTE = "pref_key_snooze_minute";
   public static final String KEY_PREF_CATEGORY_SYNC = "pref_key_category_sync";
+  public static final String KEY_PREF_KEY_CHANGE_PASS = "pref_key_change_pass";
 
   @Override
   public void onCreate(Bundle savedInstanceState) {

@@ -48,8 +48,9 @@
     <string name="menu_sign_out">Sign Out</string>
 
     <!-- TOAST MESSAGE -->
-    <string name="toast_err_login_username_required">Please input username!</string>
+    <string name="toast_err_login_username_required">Please input email!</string>
     <string name="toast_err_login_pass_required">Please input password!</string>
+    <string name="toast_err_login_re_pass_same_pass">Please input re-password same password!</string>
     <string name="toast_err_task_name_required">Please input job name!</string>
     <string name="toast_err_task_description_required">Please input content!</string>
     <string name="toast_err_task_date_time_required">Please input date and time!</string>
@@ -123,6 +124,8 @@
     <string name="setting_confirm_title_sign_out">Sign out</string>
     <string name="setting_confirm_message_sign_out">Do you want to sign out?</string>
     <string name="pref_category_sync_lable_you_online">You are online.</string>
+    <string name="pref_change_pass_title">Change password</string>
+    <string name="pref_change_pass_summary">Do you want to change password?</string>
 
     <!-- DIALOG FORGOT PASSWORD -->
     <string name="dialog_forgot_pass_title">Forgot your password?</string>
@@ -141,5 +144,10 @@
     <string name="button_remove">Remove</string>
     <string name="title_activity_change_pass">ChangePassActivity</string>
     <string name="action_settings">Settings</string>
+
+    <!--CHANGE PASSWORD-->
+    <string name="old_password">Old password</string>
+    <string name="new_password">New password</string>
+    <string name="re_new_password">Re-new password</string>
 
 </resources>

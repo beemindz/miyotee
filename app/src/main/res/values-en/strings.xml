@@ -48,8 +48,9 @@
     <string name="menu_sign_out">Sign Out</string>
 
     <!-- TOAST MESSAGE -->
-    <string name="toast_err_login_username_required">Please input username!</string>
+    <string name="toast_err_login_username_required">Please input email!</string>
     <string name="toast_err_login_pass_required">Please input password!</string>
+    <string name="toast_err_login_re_pass_same_pass">Please input re-password same password!</string>
     <string name="toast_err_task_name_required">Please input job name!</string>
     <string name="toast_err_task_description_required">Please input content!</string>
     <string name="toast_err_task_date_time_required">Please input date and time!</string>
@@ -145,4 +146,8 @@
   <string name="button_save">Save</string>
   <string name="button_remove">Remove</string>
 
+    <!--CHANGE PASSWORD-->
+    <string name="old_password">Old password</string>
+    <string name="new_password">New password</string>
+    <string name="re_new_password">Re-new password</string>
 </resources>

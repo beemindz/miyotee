@@ -9,9 +9,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
+import android.preference.PreferenceScreen;
 import android.util.Log;
 
 import com.beemindz.miyotee.R;
+import com.beemindz.miyotee.activity.ChangePassActivity;
 import com.beemindz.miyotee.activity.MainActivity;
 import com.beemindz.miyotee.activity.SettingActivity;
 import com.beemindz.miyotee.util.CommonUtils;
@@ -20,8 +22,9 @@ import com.beemindz.miyotee.util.Constant;
 public class SettingsFragment extends android.support.v4.preference.PreferenceFragment {
 
   public static final String TAG = "SettingsFragment";
-  private Preference pref;
+  private Preference pref, prefChangePass;
   private Account[] accounts;
+  PreferenceScreen preferenceScreen;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -30,10 +33,15 @@ public class SettingsFragment extends android.support.v4.preference.PreferenceFr
     addPreferencesFromResource(R.xml.setting);
     
     accounts = AccountManager.get(getActivity().getApplicationContext()).getAccountsByType(Constant.ACCOUNT_TYPE);
-    
+
+    preferenceScreen = getPreferenceScreen();
+
     pref = findPreference(SettingActivity.KEY_PREF_CATEGORY_SYNC);
+    prefChangePass = findPreference(SettingActivity.KEY_PREF_KEY_CHANGE_PASS);
 
     checkAccount();
+
+    onChangePass();
   }
 
   @Override
@@ -57,8 +65,10 @@ public class SettingsFragment extends android.support.v4.preference.PreferenceFr
     Log.d(TAG, "checkOnline:====="+ accounts.length);
     if (accounts.length > 0) {
       pref.setSummary(getResources().getString(R.string.pref_category_sync_lable_you_online));
+      preferenceScreen.addPreference(prefChangePass);
     } else {
       pref.setSummary(R.string.pref_category_sync_summary);
+      preferenceScreen.removePreference(prefChangePass);
     }
     
     Log.i(TAG, pref.getSummary().toString());
@@ -97,6 +107,22 @@ public class SettingsFragment extends android.support.v4.preference.PreferenceFr
         return false;
       }
     });
+
+  }
+
+  private void onChangePass() {
+    accounts = AccountManager.get(getActivity().getApplicationContext()).getAccountsByType(Constant.ACCOUNT_TYPE);
+    prefChangePass.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+      @Override
+      public boolean onPreferenceClick(Preference preference) {
+        if (accounts.length > 0) {
+          Intent intent = new Intent(preference.getContext(), ChangePassActivity.class);
+          preference.getContext().startActivity(intent);
+        }
+
+        return false;
+      }
+    });
   }
 
   private void eventSignOut(Context context) {
@@ -107,6 +133,7 @@ public class SettingsFragment extends android.support.v4.preference.PreferenceFr
       }
       accounts = new Account[]{};
       pref.setSummary(R.string.pref_category_sync_summary);
+      prefChangePass.setEnabled(false);
     }
   }
 }

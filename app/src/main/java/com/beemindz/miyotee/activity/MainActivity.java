@@ -382,7 +382,7 @@ public class MainActivity extends AccountAuthenticatorActivity {
           startActivity(i);
           finish();
         } else {
-          loginError.setText("Login failed. Incorrect username/password.");
+          loginError.setText(getResources().getString(R.string.toast_err_email_or_pass_incorrect));
         }
       }
     }
