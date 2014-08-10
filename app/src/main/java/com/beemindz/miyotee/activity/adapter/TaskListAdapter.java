@@ -80,7 +80,6 @@ public class TaskListAdapter extends ArrayAdapter<Item> {
     // color background.
     int sizeColor = colors.size();
 
-
     // get data item task for this position.
     final Item item = tasks.get(position);
     if (item != null) {

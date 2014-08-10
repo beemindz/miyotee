@@ -102,6 +102,8 @@ public class TaskEditorFragment extends Fragment implements View.OnClickListener
     layoutReminderDate = (RelativeLayout) view.findViewById(R.id.layoutReminderDate);
     btnDelete = (Button) view.findViewById(R.id.btnDeleteTask);
     cbIsComplete = (CheckBox) view.findViewById(R.id.cbComplete);
+    btnDueDate = (ImageButton) view.findViewById(R.id.btnSelectDate);
+    btnReminderDate = (ImageButton) view.findViewById(R.id.btnSelectTime);
     mCalendarDueDate = Calendar.getInstance();
     mCalendarReminderDate = Calendar.getInstance();
 
@@ -115,7 +117,7 @@ public class TaskEditorFragment extends Fragment implements View.OnClickListener
 
     updateTaskView(mTaskId);
     initAdModule(view);
-
+    onClickCalendar();
     return view;
   }
 
@@ -239,6 +241,24 @@ public class TaskEditorFragment extends Fragment implements View.OnClickListener
         confirmDelete().show();
         break;
     }
+  }
+
+  private void onClickCalendar() {
+    btnDueDate.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        DialogFragment dueDateDialogFragment = DueDateDialogFragment.newInstance(mCalendarDueDate);
+        dueDateDialogFragment.show(getActivity().getSupportFragmentManager(), "DueDateDialogFragment");
+      }
+    });
+
+    btnReminderDate.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        DialogFragment reminderDateDialogFragment = ReminderDateDialogFragment.newInstance(mCalendarReminderDate);
+        reminderDateDialogFragment.show(getActivity().getSupportFragmentManager(), "ReminderDateDialogFragment");
+      }
+    });
   }
 
   private void initAdModule(View view) {
