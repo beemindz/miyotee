@@ -63,14 +63,13 @@
     <string name="toast_err_email_or_pass_incorrect">Login failed. Incorrect email/password.</string>
 
     <!-- EDIT TEXT -->
-    <string name="et_hint_task_title">Add an event&#8230;</string>
+    <string name="et_hint_task_title">Add an event…</string>
 
     <!-- TEXT VIEW -->
     <string name="tv_task_not_reminder">Never to limit.</string>
     <string name="tv_task_set_reminder">REMINDER</string>
     <string name="tv_about_content">Content about</string>
     <string name="tv_task_set_complete">DONE</string>
-
 
     <!-- NAVIGATION MENU -->
     <string name="drawer_open">Open navigation dra</string>
@@ -98,15 +97,12 @@
     <string name="tv_fb_address">https://www.facebook.com/miyoteeapp</string>
     <string name="tv_tw_address">https://www.twitter.com/miyoteeapp</string>
     <string name="tv_website_address">http://www.miyotee.com</string>
-    <string name="tv_about_copyright">&#169;2014 Beemindz.com</string>
+    <string name="tv_about_copyright">©2014 Beemindz.com</string>
 
     <!-- CONFIG ADMOD -->
     <string name="admod_unit_id">ca-app-pub-8021202070896817/5741420082</string>
     <string name="admod_unit_name">Bottom Banner</string>
-
-
     <string name="hello_blank_fragment">Hello blank fragment</string>
-
     <string name="title_activity_list">List</string>
     <string name="title_about">About</string>
     <string name="title_section2">Section 2</string>
@@ -126,6 +122,7 @@
     <string name="pref_category_sync_signOut_title">Sign Out</string>
     <string name="setting_confirm_title_sign_out">Sign out</string>
     <string name="setting_confirm_message_sign_out">Do you want to sign out?</string>
+    <string name="pref_category_sync_lable_you_online">You are online.</string>
 
     <!-- DIALOG FORGOT PASSWORD -->
     <string name="dialog_forgot_pass_title">Forgot your password?</string>
@@ -139,8 +136,10 @@
     <string name="change_pass_title">Change Password</string>
     <string name="change_pass_repassword">Re-Passwrod</string>
 
-  <!-- DIALOG -->
-  <string name="button_save">Save</string>
-  <string name="button_remove">Remove</string>
-</resources>
+    <!-- DIALOG -->
+    <string name="button_save">Save</string>
+    <string name="button_remove">Remove</string>
+    <string name="title_activity_change_pass">ChangePassActivity</string>
+    <string name="action_settings">Settings</string>
 
+</resources>

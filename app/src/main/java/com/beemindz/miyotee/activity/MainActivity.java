@@ -60,12 +60,6 @@ public class MainActivity extends AccountAuthenticatorActivity {
       try {
         if (edUserName != null && !TextUtils.isEmpty(edUserName.getText().toString())) {
           if (CommonUtils.isEmailValid(edUserName.getText().toString().trim())) {
-            progressDialog = new ProgressDialog(MainActivity.this);
-            progressDialog.setMessage("Calling server ...");
-            progressDialog.setIndeterminate(false);
-            progressDialog.setCancelable(true);
-            progressDialog.show();
-
             ForgotPassword forgotPassword = new ForgotPassword(MainActivity.this, edUserName.getText().toString());
             ResponseServer response = new ResponseServer();
             forgotPassword.execute();
@@ -404,6 +398,7 @@ public class MainActivity extends AccountAuthenticatorActivity {
     public ForgotPassword(Context context, String from) {
       this.context = context;
       this.email = from;
+      pDialog = ProgressDialog.show(context, "Loading...", "Please wait...", false, true);
     }
 
     @Override
@@ -443,7 +438,7 @@ public class MainActivity extends AccountAuthenticatorActivity {
 
     @Override
     protected void onPostExecute(ResponseServer responseServer) {
-      progressDialog.dismiss();
+      pDialog.dismiss();
     }
   }
   // END.

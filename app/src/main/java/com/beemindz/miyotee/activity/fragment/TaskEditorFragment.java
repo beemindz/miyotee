@@ -192,30 +192,32 @@ public class TaskEditorFragment extends Fragment implements View.OnClickListener
    */
   public void customActionBar() {
     ActionBar actionBar = getActionBar();
-    actionBar.setDisplayShowCustomEnabled(true);
+    if (actionBar != null) {
+      actionBar.setDisplayShowCustomEnabled(true);
 
-    actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-    actionBar.setCustomView(R.layout.editor_task_action_bar);
+      actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+      actionBar.setCustomView(R.layout.editor_task_action_bar);
 
-    Button btnCancel = (Button) getActivity().findViewById(R.id.btnCancel);
-    Button btnOk = (Button) getActivity().findViewById(R.id.btnOK);
+      Button btnCancel = (Button) getActivity().findViewById(R.id.btnCancel);
+      Button btnOk = (Button) getActivity().findViewById(R.id.btnOK);
 
-    btnCancel.setOnClickListener(new View.OnClickListener() {
+      btnCancel.setOnClickListener(new View.OnClickListener() {
 
-      @Override
-      public void onClick(View arg0) {
-        getActivity().getSupportFragmentManager().popBackStack();
-      }
-    });
+        @Override
+        public void onClick(View arg0) {
+          getActivity().getSupportFragmentManager().popBackStack();
+        }
+      });
 
-    btnOk.setOnClickListener(new View.OnClickListener() {
+      btnOk.setOnClickListener(new View.OnClickListener() {
 
-      @Override
-      public void onClick(View v) {
-        updateTask(task);
-        getActivity().getSupportFragmentManager().popBackStack();
-      }
-    });
+        @Override
+        public void onClick(View v) {
+          updateTask(task);
+          getActivity().getSupportFragmentManager().popBackStack();
+        }
+      });
+    }
   }
 
   @Override
@@ -275,21 +277,26 @@ public class TaskEditorFragment extends Fragment implements View.OnClickListener
           Date date = CommonUtils.getDate(tvDueDate.getText().toString(), CommonUtils.getDateFormatSystem(getActivity()));
           task.setDueDate(date);
           mCalendarDueDate.setTime(date);
+          task.setIsDueDate(true);
         } else {
           task.setDueDate(null);
+          task.setIsDueDate(false);
         }
 
         if (!TextUtils.isEmpty(tvReminderDate.getText().toString())) {
           Date date = CommonUtils.getDate(tvReminderDate.getText().toString(), CommonUtils.getDateTimeFormatSystem(getActivity()));
           task.setReminderDate(date);
           mCalendarDueDate.setTime(date);
+          task.setIsReminder(false);
 
           if (!cbIsComplete.isChecked() && mCalendarDueDate.getTimeInMillis() > System.currentTimeMillis()) {
             new ReminderManager().setReminder(getActivity(), task.getId(), mCalendarDueDate,
                 task.getTaskName(), task.getTaskDescription());
+            task.setIsReminder(true);
           }
         } else {
           task.setReminderDate(null);
+          task.setIsReminder(false);
         }
 
 

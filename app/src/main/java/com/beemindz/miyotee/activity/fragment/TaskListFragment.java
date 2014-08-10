@@ -95,8 +95,9 @@ public class TaskListFragment extends ListFragment {
           task.setIsReminder(false);
           task.setIsComplete(false);
           task.setIsDueDate(false);
-          task.setDueDate(Calendar.getInstance().getTime());
-          task.setReminderDate(Calendar.getInstance().getTime());
+          //task.setDueDate(Calendar.getInstance().getTime());
+          task.setDueDate(null);
+          task.setReminderDate(null);
           task.setUpdatedDate(Calendar.getInstance().getTime());
           task.setCreatedDate(Calendar.getInstance().getTime());
           TaskRepository.insertOrUpdate(getActivity().getApplicationContext(), task);

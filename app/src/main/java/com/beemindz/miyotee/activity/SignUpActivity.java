@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.beemindz.miyotee.R;
 import com.beemindz.miyotee.dao.MiyoteeContentProvider;
 import com.beemindz.miyotee.service.authentication.AccountAuthenticatorActivity;
+import com.beemindz.miyotee.util.CommonUtils;
 import com.beemindz.miyotee.util.Constant;
 import com.beemindz.miyotee.util.NetworkUtils;
 import com.beemindz.miyotee.util.ToastUtils;
@@ -82,6 +83,10 @@ public class SignUpActivity extends AccountAuthenticatorActivity {
         }
         if (TextUtils.isEmpty(pass)) {
           ToastUtils.toast(SignUpActivity.this, R.string.toast_err_login_pass_required);
+          return;
+        }
+        if (!CommonUtils.isEmailValid(userName)) {
+          ToastUtils.toast(SignUpActivity.this, R.string.toast_err_email_invalid);
           return;
         }
 

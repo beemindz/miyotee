@@ -56,7 +56,7 @@ public class SettingsFragment extends android.support.v4.preference.PreferenceFr
     accounts = AccountManager.get(getActivity().getApplicationContext()).getAccountsByType(Constant.ACCOUNT_TYPE);
     Log.d(TAG, "checkOnline:====="+ accounts.length);
     if (accounts.length > 0) {
-      pref.setSummary("You're online.");
+      pref.setSummary(getResources().getString(R.string.pref_category_sync_lable_you_online));
     } else {
       pref.setSummary(R.string.pref_category_sync_summary);
     }

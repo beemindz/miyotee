@@ -18,8 +18,7 @@
         android:layout_marginTop="6sp"
         android:layout_marginLeft="10dp"
         android:textStyle="bold"
-        android:singleLine="true"
-        android:text="Item"/>
+        android:singleLine="true"/>
     <TextView
         android:id="@+id/tv_due_date"
         android:layout_width="match_parent"

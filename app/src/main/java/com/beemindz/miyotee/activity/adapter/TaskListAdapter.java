@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.beemindz.miyotee.R;
@@ -106,7 +107,7 @@ public class TaskListAdapter extends ArrayAdapter<Item> {
 
         Log.d("===width list view====", "" + width + "; length:" + task.getTaskName().trim().length());
 
-        if (task.getDueDate() != null) {
+        if (task.getDueDate() != null && task.getIsDueDate()) {
           Calendar dueDate = Calendar.getInstance();
           dueDate.setTime(task.getDueDate());
 
@@ -118,7 +119,7 @@ public class TaskListAdapter extends ArrayAdapter<Item> {
           viewHolder.tvTaskName.setText(task.getTaskName().trim().toUpperCase());
         }
 
-        if (task.getReminderDate() != null) {
+        if (task.getReminderDate() != null && task.getIsReminder() && task.getReminderDate().getTime() > System.currentTimeMillis()) {
           viewHolder.imgReminder.setVisibility(View.VISIBLE);
         } else {
           viewHolder.imgReminder.setVisibility(View.GONE);
@@ -126,9 +127,9 @@ public class TaskListAdapter extends ArrayAdapter<Item> {
 
         // set color background item.
         convertView.setBackgroundResource(colors.get(colorPos));
-        float alpha = 1;
+        //float alpha = 1;
         if (task.getIsComplete()) {
-          alpha = 0.45f;
+          //alpha = 0.45f;
           viewHolder.tvTaskName.setPaintFlags(viewHolder.tvTaskName.getPaintFlags() | (Paint.STRIKE_THRU_TEXT_FLAG));
         } else if ((viewHolder.tvTaskName.getPaintFlags() & Paint.STRIKE_THRU_TEXT_FLAG) > 0) {
           viewHolder.tvTaskName.setPaintFlags(viewHolder.tvTaskName.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));

@@ -105,7 +105,7 @@ public class NavigationDrawerFragment extends Fragment {
         });
 
       ArrayList<ItemNavigation> itemNavigations = new ArrayList<ItemNavigation>();
-      itemNavigations.add(new ItemNavigation(R.drawable.ic_about, getResources().getString(R.string.title_activity_list)));
+      itemNavigations.add(new ItemNavigation(R.drawable.ic_categories, getResources().getString(R.string.title_activity_list)));
       itemNavigations.add(new ItemNavigation(R.drawable.ic_setting, getResources().getString(R.string.setting)));
       itemNavigations.add(new ItemNavigation(R.drawable.ic_about, getResources().getString(R.string.title_about)));
       itemNavigations.add(new ItemNavigation(R.drawable.ic_like_fb, getResources().getString(R.string.like_us_fb)));

@@ -126,6 +126,7 @@
     <string name="pref_category_sync_signOut_title">Sign Out</string>
     <string name="setting_confirm_title_sign_out">Sign out</string>
     <string name="setting_confirm_message_sign_out">Do you want to sign out?</string>
+    <string name="pref_category_sync_lable_you_online">You are online.</string>
 
     <!-- DIALOG FORGOT PASSWORD -->
     <string name="dialog_forgot_pass_title">Forgot your password?</string>
