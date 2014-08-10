@@ -133,7 +133,7 @@ public class SettingsFragment extends android.support.v4.preference.PreferenceFr
       }
       accounts = new Account[]{};
       pref.setSummary(R.string.pref_category_sync_summary);
-      prefChangePass.setEnabled(false);
+      preferenceScreen.removePreference(prefChangePass);
     }
   }
 }
