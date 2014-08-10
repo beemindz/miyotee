@@ -62,6 +62,8 @@
     <string name="toast_err_forgot_pass_send_email_succes">You will receiver a email change password in a few minutes!</string>
     <string name="toast_err_email_invalid">Email invalid? Ex:youemail@domain.com</string>
     <string name="toast_err_email_or_pass_incorrect">Login failed. Incorrect email/password.</string>
+    <string name="toast_msg_change_password_success">Change password success!</string>
+    <string name="toast_msg_change_password_failed">Change password failed!</string>
 
     <!-- EDIT TEXT -->
     <string name="et_hint_task_title">Add an event…</string>

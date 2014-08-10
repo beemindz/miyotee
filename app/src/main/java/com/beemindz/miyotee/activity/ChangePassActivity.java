@@ -2,6 +2,7 @@ package com.beemindz.miyotee.activity;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.accounts.NetworkErrorException;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -83,6 +84,11 @@ public class ChangePassActivity extends ActionBarActivity {
     //if (id == R.id.action_settings) {
     //    return true;
     //}
+    switch (item.getItemId()) {
+      case android.R.id.home:
+        finish();
+        return true;
+    }
     return super.onOptionsItemSelected(item);
   }
 
@@ -91,28 +97,43 @@ public class ChangePassActivity extends ActionBarActivity {
     btnSend.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        String pass = etPassword.getText().toString().trim();
-        String re_pass = etRePassword.getText().toString().trim();
-        String oldPass = etOldPassword.getText().toString().trim();
-        if (TextUtils.isEmpty(email)) {
-          ToastUtils.toast(ChangePassActivity.this, R.string.toast_err_login_username_required);
-          return;
-        }
-        if (TextUtils.isEmpty(oldPass)) {
-          ToastUtils.toast(ChangePassActivity.this, R.string.toast_err_login_pass_required);
-          return;
-        }
-        if (TextUtils.isEmpty(pass)) {
-          ToastUtils.toast(ChangePassActivity.this, R.string.toast_err_login_pass_required);
-          return;
-        }
-        if (TextUtils.isEmpty(re_pass) || !re_pass.trim().equals(pass.trim())) {
-          ToastUtils.toast(ChangePassActivity.this, R.string.toast_err_login_re_pass_same_pass);
-          return;
-        }
+        try {
+          String pass = etPassword.getText().toString().trim();
+          String re_pass = etRePassword.getText().toString().trim();
+          String oldPass = etOldPassword.getText().toString().trim();
+          if (TextUtils.isEmpty(email)) {
+            ToastUtils.toast(ChangePassActivity.this, R.string.toast_err_login_username_required);
+            return;
+          }
+          if (TextUtils.isEmpty(oldPass)) {
+            ToastUtils.toast(ChangePassActivity.this, R.string.toast_err_login_pass_required);
+            return;
+          }
+          if (TextUtils.isEmpty(pass)) {
+            ToastUtils.toast(ChangePassActivity.this, R.string.toast_err_login_pass_required);
+            return;
+          }
+          if (TextUtils.isEmpty(re_pass) || !re_pass.trim().equals(pass.trim())) {
+            ToastUtils.toast(ChangePassActivity.this, R.string.toast_err_login_re_pass_same_pass);
+            return;
+          }
 
-        ChangePassword changePassword = new ChangePassword(ChangePassActivity.this, email, oldPass, pass);
-        changePassword.execute();
+          ChangePassword changePassword = new ChangePassword(ChangePassActivity.this, email, oldPass, pass);
+          changePassword.execute();
+
+
+          boolean result = changePassword.get();
+          if (result) {
+            ToastUtils.toast(ChangePassActivity.this, R.string.toast_msg_change_password_success);
+            etOldPassword.setText("");
+            etPassword.setText("");
+            etRePassword.setText("");
+          } else {
+            ToastUtils.toast(ChangePassActivity.this, R.string.toast_msg_change_password_failed);
+          }
+        } catch (Exception e) {
+          Log.e("ChangeActivity", "" + e);
+        }
       }
     });
   }
@@ -132,7 +153,7 @@ public class ChangePassActivity extends ActionBarActivity {
       this.email = email;
       this.old_password = oldPass;
       this.re_password = re_password;
-
+      Log.d("ChangePassword", "oldPass=" + oldPass + ", new pass=" + re_password);
       btnSend.setEnabled(false);
     }
 
@@ -154,13 +175,14 @@ public class ChangePassActivity extends ActionBarActivity {
        * String deviceId = Secure.getString(getActivity().getContentResolver(),
        * Secure.ANDROID_ID); Log.d("android_id:", deviceId);
        */
-
+      JSONObject json = null;
       try {
         // Building Parameters
         String[] keys = new String[]{"email", "old_pass", "new_pass"};
         String[] values = new String[]{email, old_password, re_password};
 
-        JSONObject json = NetworkUtils.postJSONObjFromUrl(Constant.URL_HOST + "change-pass.php", keys, values);
+        json = NetworkUtils.postJSONObjFromUrl(Constant.URL_HOST + "change-pass.php", keys, values);
+        Log.d("ChangPassword", json + "");
         if (json != null) {
           // json error tag
           error = json.getBoolean(JSON_TAG_ERROR);
@@ -176,10 +198,15 @@ public class ChangePassActivity extends ActionBarActivity {
         return false;
       } catch (JSONException e) {
         Log.e("ChangePassword","=doInBackground=" + e);
+        message = e.getMessage();
+        e.printStackTrace();
+        return false;
+      } catch (Exception e) {
+        Log.e("ChangePassword", "Exception doInBackground" + e);
+        message = e.getMessage();
         e.printStackTrace();
         return false;
       }
-
     }
 
     /**
