@@ -1,6 +1,7 @@
 package com.beemindz.miyotee.activity.fragment;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -31,6 +32,12 @@ public class ReminderDateDialogFragment extends DialogFragment {
     return reminderDateDialogFragment;
   }
 
+  @Override
+  public Dialog onCreateDialog(Bundle savedInstanceState) {
+    Dialog dialog = super.onCreateDialog(savedInstanceState);
+    dialog.setTitle(R.string.dialog_choose_reminder_title);
+    return dialog;
+  }
   @SuppressLint("NewApi")
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

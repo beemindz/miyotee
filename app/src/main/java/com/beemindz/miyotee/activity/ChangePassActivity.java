@@ -122,6 +122,8 @@ public class ChangePassActivity extends ActionBarActivity {
             return;
           }
 
+          if (!TextUtils.isEmpty(oldPass)) oldPass = CommonUtils.computeMD5Hash(oldPass.trim());
+          if (!TextUtils.isEmpty(pass)) pass = CommonUtils.computeMD5Hash(pass.trim());
           ChangePassword changePassword = new ChangePassword(ChangePassActivity.this, email, oldPass, pass);
           changePassword.execute();
 

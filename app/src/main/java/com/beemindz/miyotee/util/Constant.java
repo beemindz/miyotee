@@ -3,6 +3,7 @@ package com.beemindz.miyotee.util;
 public class Constant {
 
   public static final String URL_HOST = "http://ohoh123.byethost8.com/api.miyotee/";
+  //public static final String URL_HOST = "http://192.168.1.63/miyotee-service/";
   public static final String ACCOUNT_TYPE = "com.beemindz.miyotee";
   public static final String DATE_FORMAT = "yyyy-MM-dd";
   public static final String TIME_FORMAT = "kk:mm";
@@ -47,4 +48,6 @@ public class Constant {
   }
 
   public static final String REST_URL_FORGOT_PASSWORD = URL_HOST + "forgot_pass.php";
+
+  public static final String DEFAULT_PASSWORD = "123456";
 }

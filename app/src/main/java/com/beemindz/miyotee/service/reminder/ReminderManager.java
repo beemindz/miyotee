@@ -33,6 +33,19 @@ public class ReminderManager {
     pi.cancel();
   }
 
+  public void destroyAlarm(Context context, int taskId) {
+    Log.d(TAG + "==DESTROY ALARM==", "TaskId=" + taskId);
+    Intent intentsOpen = new Intent(context, OnAlarmReceiver.class);
+    PendingIntent pendingIntent = PendingIntent.getBroadcast(context, taskId, intentsOpen, PendingIntent.FLAG_ONE_SHOT);
+    PendingIntent pendingIntent1 = PendingIntent.getBroadcast(context, taskId, intentsOpen,
+        PendingIntent.FLAG_UPDATE_CURRENT);
+    AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+    alarmManager.cancel(pendingIntent);
+    alarmManager.cancel(pendingIntent1);
+    pendingIntent.cancel();
+    pendingIntent1.cancel();
+  }
+
   /**
    * Reads preferences, and schedule a procrastinator alarm for a past due task.
    */

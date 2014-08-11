@@ -163,6 +163,7 @@ public class MainActivity extends AccountAuthenticatorActivity {
           ToastUtils.toast(MainActivity.this, R.string.toast_msg_network_not_connect);
           return;
         }
+        if (!TextUtils.isEmpty(pass)) pass = CommonUtils.computeMD5Hash(pass.trim());
         Login login = new Login(MainActivity.this, null, userName, pass, "");
         login.execute();
       }
@@ -421,6 +422,7 @@ public class MainActivity extends AccountAuthenticatorActivity {
         // Building Parameters
         List<NameValuePair> parList = new ArrayList<NameValuePair>();
         parList.add(new BasicNameValuePair("email", email));
+        parList.add(new BasicNameValuePair("password", CommonUtils.computeMD5Hash(Constant.DEFAULT_PASSWORD)));
 
         // getting json object.
 

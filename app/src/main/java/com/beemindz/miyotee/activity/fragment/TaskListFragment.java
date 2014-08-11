@@ -27,6 +27,7 @@ import com.beemindz.miyotee.activity.adapter.Item;
 import com.beemindz.miyotee.activity.adapter.TaskListAdapter;
 import com.beemindz.miyotee.dao.Task;
 import com.beemindz.miyotee.dao.TaskRepository;
+import com.beemindz.miyotee.service.reminder.ReminderManager;
 import com.beemindz.miyotee.util.CommonUtils;
 import com.google.analytics.tracking.android.EasyTracker;
 
@@ -214,6 +215,7 @@ public class TaskListFragment extends ListFragment {
         dialog.dismiss();
         getActivity().getSupportFragmentManager().popBackStack();
         updateAdapter();
+        new ReminderManager().destroyAlarm(getActivity(), (int) taskId);
       }
     }, new android.content.DialogInterface.OnClickListener() {
 

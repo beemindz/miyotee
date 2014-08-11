@@ -350,6 +350,7 @@ public class TaskEditorFragment extends Fragment implements View.OnClickListener
         // your deleting code
         TaskRepository.deleteTaskWithId(getActivity().getApplicationContext(), mTaskId);
         dialog.dismiss();
+        new ReminderManager().destroyAlarm(getActivity(), (int) mTaskId);
         getActivity().getSupportFragmentManager().popBackStack();
       }
     }, new android.content.DialogInterface.OnClickListener() {
