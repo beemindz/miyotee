@@ -64,6 +64,7 @@
     <string name="toast_err_email_or_pass_incorrect">Login failed. Incorrect email/password.</string>
     <string name="toast_msg_change_password_success">Change password success!</string>
     <string name="toast_msg_change_password_failed">Change password failed!</string>
+    <string name="toast_msg_network_not_connect">Please connect to network!</string>
 
     <!-- EDIT TEXT -->
     <string name="et_hint_task_title">Add an event…</string>

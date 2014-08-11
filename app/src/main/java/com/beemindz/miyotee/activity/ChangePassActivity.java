@@ -117,6 +117,10 @@ public class ChangePassActivity extends ActionBarActivity {
             ToastUtils.toast(ChangePassActivity.this, R.string.toast_err_login_re_pass_same_pass);
             return;
           }
+          if (!NetworkUtils.isOnline(ChangePassActivity.this)) {
+            ToastUtils.toast(ChangePassActivity.this, R.string.toast_msg_network_not_connect);
+            return;
+          }
 
           ChangePassword changePassword = new ChangePassword(ChangePassActivity.this, email, oldPass, pass);
           changePassword.execute();

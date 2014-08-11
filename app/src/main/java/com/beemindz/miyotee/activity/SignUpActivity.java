@@ -89,7 +89,10 @@ public class SignUpActivity extends AccountAuthenticatorActivity {
           ToastUtils.toast(SignUpActivity.this, R.string.toast_err_email_invalid);
           return;
         }
-
+        if (!NetworkUtils.isOnline(SignUpActivity.this)) {
+          ToastUtils.toast(SignUpActivity.this, R.string.toast_msg_network_not_connect);
+          return;
+        }
         SignUp signUp = new SignUp(SignUpActivity.this);
         signUp.execute();
       }
@@ -163,6 +166,8 @@ public class SignUpActivity extends AccountAuthenticatorActivity {
       String password = signUpPassword.getText().toString();
       String fullName = signUpFullName.getText().toString();
 
+      // md5 password
+      if (!TextUtils.isEmpty(password)) password = CommonUtils.computeMD5Hash(password.trim());
       try {
         // Building Parameters
         String[] keys = new String[]{"username", "password", "name", "fbAccessToken"};

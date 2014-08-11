@@ -59,6 +59,11 @@ public class MainActivity extends AccountAuthenticatorActivity {
     public void onClick(View v) {
       try {
         if (edUserName != null && !TextUtils.isEmpty(edUserName.getText().toString())) {
+          if (!NetworkUtils.isOnline(MainActivity.this)) {
+            ToastUtils.toast(MainActivity.this, R.string.toast_msg_network_not_connect);
+            return;
+          }
+
           if (CommonUtils.isEmailValid(edUserName.getText().toString().trim())) {
             ForgotPassword forgotPassword = new ForgotPassword(MainActivity.this, edUserName.getText().toString());
             ResponseServer response = new ResponseServer();
@@ -154,6 +159,10 @@ public class MainActivity extends AccountAuthenticatorActivity {
           return;
         }
 
+        if (!NetworkUtils.isOnline(MainActivity.this)) {
+          ToastUtils.toast(MainActivity.this, R.string.toast_msg_network_not_connect);
+          return;
+        }
         Login login = new Login(MainActivity.this, null, userName, pass, "");
         login.execute();
       }

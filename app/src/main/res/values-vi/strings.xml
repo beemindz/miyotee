@@ -64,6 +64,7 @@
     <string name="toast_err_email_or_pass_incorrect">Đăng nhập thất bại. Email hoặc mật khẩu không đúng.</string>
     <string name="toast_msg_change_password_success">Thay đổi mật khẩu thành công.</string>
     <string name="toast_msg_change_password_failed">Thay đổi mật khẩu thất bại.</string>
+    <string name="toast_msg_network_not_connect">Vui lòng kết nối tới internet.</string>
 
     <!-- EDIT TEXT -->
     <string name="et_hint_task_title">Thêm một sự kiện&#8230;</string>
