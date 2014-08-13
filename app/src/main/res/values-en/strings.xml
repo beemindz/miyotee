@@ -5,9 +5,9 @@
     <string name="hello_world">Hello world</string>
     <string name="title_activity_task_list">TASK LIST</string>
     <string name="title_activity_task_editor">TASK EDITOR</string>
-    <string name="title_activity_sign_up">SIGN UP</string>
-    <string name="title_activity_sign_in">SIGN IN</string>
-    <string name="no_data">Create reminder to me can remind you!!!</string>
+  <string name="title_activity_sign_up">Sign Up</string>
+  <string name="title_activity_sign_in">Sign In</string>
+  <string name="no_data">Create reminder to me can remind you!!!</string>
     <string name="send">Send</string>
     <string name="event_completed">Event completed</string>
     <string name="today">Today</string>
@@ -98,7 +98,6 @@
     <string name="dialog_reminder_btn_stop">STOP</string>
 
     <!-- ABOUT ACTIVITY -->
-    <string name="name_about">ABOUT</string>
     <string name="tv_app_name">MIYOTEE</string>
     <string name="tv_version">Version 1.1</string>
     <string name="tv_fb_address">https://www.facebook.com/miyoteeapp</string>
