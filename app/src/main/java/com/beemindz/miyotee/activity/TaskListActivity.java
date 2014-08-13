@@ -77,7 +77,7 @@ public class TaskListActivity extends ActionBarActivity
         startActivity(intentSetting);
         break;
       case 3:
-        mTitle = getString(R.string.name_about);
+        mTitle = getString(R.string.title_about);
         break;
       case 4:
         Intent facebookIntent = CommonUtils.getOpenFacebookIntent(this);
@@ -112,7 +112,7 @@ public class TaskListActivity extends ActionBarActivity
         getSupportFragmentManager().beginTransaction().replace(R.id.container, new TaskListFragment()).commit();
       }
 
-      if (mTitle.equals(getString(R.string.name_about))) {
+      if (mTitle.equals(getString(R.string.title_about))) {
         FragmentManager fm = getSupportFragmentManager();
         fm.beginTransaction()
             .replace(R.id.container, new AboutFragment())
