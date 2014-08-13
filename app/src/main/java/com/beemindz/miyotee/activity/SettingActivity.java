@@ -23,7 +23,7 @@ public class SettingActivity extends ActionBarActivity {
     getSupportActionBar().setDisplayShowHomeEnabled(true);
     getSupportActionBar().setHomeButtonEnabled(true);
     String setting = getResources().getString(R.string.setting);
-    getSupportActionBar().setTitle(setting.toUpperCase());
+    getSupportActionBar().setTitle(setting);
     // Display the fragment as the main content.
     getSupportFragmentManager().beginTransaction().replace(android.R.id.content, new SettingsFragment()).commit();
   }
