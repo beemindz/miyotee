@@ -1,5 +1,6 @@
 package com.beemindz.miyotee.activity.fragment;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
@@ -26,6 +27,13 @@ public class DueDateDialogFragment extends DialogFragment {
     DueDateDialogFragment dueDateDialogFragment = new DueDateDialogFragment();
     mCalendar = calendar;
     return dueDateDialogFragment;
+  }
+
+  @Override
+  public Dialog onCreateDialog(Bundle savedInstanceState) {
+    Dialog dialog = super.onCreateDialog(savedInstanceState);
+    dialog.setTitle(R.string.dialog_choose_due_date_title);
+    return dialog;
   }
 
   @Override

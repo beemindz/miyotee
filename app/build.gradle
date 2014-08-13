@@ -8,7 +8,7 @@ android {
         applicationId "com.beemindz.miyotee"
         minSdkVersion 10
         targetSdkVersion 19
-        versionCode 8
+        versionCode 10
         versionName "1.1"
     }
 
@@ -35,11 +35,12 @@ dependencies {
     // You must install or update the Support Repository through the SDK manager to use this dependency.
     // You must install or update the Support Repository through the SDK manager to use this dependency.
     // You must install or update the Support Repository through the SDK manager to use this dependency.
+    // You must install or update the Support Repository through the SDK manager to use this dependency.
+    compile project(':libraries:facebook')
+    compile project(':libraries:android-support-v4-preferencefragment-master')
     compile 'com.android.support:appcompat-v7:19.+'
     // You must install or update the Support Repository through the SDK manager to use this dependency.
     compile 'com.android.support:support-v4:19.+'
     compile 'de.greenrobot:greendao:1.3.7'
     compile 'com.google.android.gms:play-services:+'
-    compile project(':libraries:facebook')
-    compile project(':libraries:android-support-v4-preferencefragment-master')
 }
