@@ -2,7 +2,7 @@ package com.beemindz.miyotee.util;
 
 public class Constant {
 
-  public static final String URL_HOST = "http://ohoh123.byethost8.com/api.miyotee/";
+  public static final String URL_HOST = "http://api.miyotee.com/";
   //public static final String URL_HOST = "http://192.168.1.63/miyotee-service/";
   public static final String ACCOUNT_TYPE = "com.beemindz.miyotee";
   public static final String DATE_FORMAT = "yyyy-MM-dd";

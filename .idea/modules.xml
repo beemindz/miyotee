@@ -6,7 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/libraries/android-support-v4-preferencefragment-master/android-support-v4-preferencefragment-master.iml" filepath="$PROJECT_DIR$/libraries/android-support-v4-preferencefragment-master/android-support-v4-preferencefragment-master.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/libraries/facebook/facebook.iml" filepath="$PROJECT_DIR$/libraries/facebook/facebook.iml" />
-      <module fileurl="file://$PROJECT_DIR$/miyotee_ver101.iml" filepath="$PROJECT_DIR$/miyotee_ver101.iml" />
+      <module fileurl="file://$PROJECT_DIR$/miyotee.iml" filepath="$PROJECT_DIR$/miyotee.iml" />
     </modules>
   </component>
 </project>
