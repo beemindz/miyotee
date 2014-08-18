@@ -107,7 +107,7 @@ public class TaskEditorFragment extends Fragment implements View.OnClickListener
     btnReminderDate = (ImageButton) view.findViewById(R.id.btnSelectTime);
     mCalendarDueDate = Calendar.getInstance();
     mCalendarReminderDate = Calendar.getInstance();
-
+    mCalendarReminderDate.add(Calendar.MINUTE, Constant.ADDED_MINUTE);
     layoutDueDate.setOnClickListener(this);
     layoutReminderDate.setOnClickListener(this);
 //    btnDueDate = (ImageButton) view.findViewById(R.id.btnSelectDate);
