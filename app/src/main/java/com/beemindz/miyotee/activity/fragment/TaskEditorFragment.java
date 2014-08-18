@@ -178,6 +178,11 @@ public class TaskEditorFragment extends Fragment implements View.OnClickListener
       }
       if (task.getReminderDate() != null) {
         mCalendarReminderDate.setTime(task.getReminderDate());
+        if (mCalendarReminderDate.getTimeInMillis() <= System.currentTimeMillis()) {
+          mCalendarReminderDate = Calendar.getInstance();
+          mCalendarReminderDate.add(Calendar.MINUTE, Constant.ADDED_MINUTE);
+        }
+
         tvReminderDate.setText(CommonUtils.getStringDate(mCalendarReminderDate, CommonUtils.getDateTimeFormatSystem(getActivity())));
       }
 

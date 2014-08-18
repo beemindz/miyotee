@@ -110,9 +110,9 @@ public class OnAlarmReceiver extends BroadcastReceiver {
     final TextView taskDescription = (TextView) dialogview.findViewById(R.id.alarm_description);
     TextView title = (TextView) dialogview.findViewById(R.id.tvTaskTitle);
     String nameTask = name != null ? name.trim() : "Miyotee";
-    if (nameTask.length() > 15) {
-      nameTask = String.format("%s ...", nameTask.substring(0, 15));
-    }
+//    if (nameTask.length() > 15) {
+//      nameTask = String.format("%s ...", nameTask.substring(0, 15));
+//    }
     title.setText(nameTask);
 
     if (!TextUtils.isEmpty(description)) {
