@@ -26,6 +26,7 @@ import com.beemindz.miyotee.dao.TaskRepository;
 import com.beemindz.miyotee.service.reminder.ReminderManager;
 import com.beemindz.miyotee.util.CommonUtils;
 import com.beemindz.miyotee.util.Constant;
+import com.beemindz.miyotee.util.ToastUtils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
@@ -220,8 +221,10 @@ public class TaskEditorFragment extends Fragment implements View.OnClickListener
 
         @Override
         public void onClick(View v) {
-          updateTask(task);
-          getActivity().getSupportFragmentManager().popBackStack();
+          boolean result = updateTask(task);
+          if (result) {
+            getActivity().getSupportFragmentManager().popBackStack();
+          }
         }
       });
     }
@@ -287,12 +290,13 @@ public class TaskEditorFragment extends Fragment implements View.OnClickListener
     adView.loadAd(adRequest);
   }
 
-  private void updateTask(Task task) {
+  private boolean updateTask(Task task) {
     // validate input.
     int valid = validateInputName(etName.getText().toString());
     // case: input not correct.
     if (valid != 0) {
-      return;
+      ToastUtils.toast(getActivity(), valid);
+      return false;
     } else {
       if (task != null) {
         task.setTaskName(etName.getText().toString());
@@ -329,8 +333,8 @@ public class TaskEditorFragment extends Fragment implements View.OnClickListener
 
         TaskRepository.insertOrUpdate(getActivity(), task);
       }
+      return true;
     }
-
   }
 
   /**
