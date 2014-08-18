@@ -179,7 +179,7 @@ public class MainActivity extends AccountAuthenticatorActivity {
         // "Loading...", "Please wait...", false, true);
         Intent i = new Intent(MainActivity.this, SignUpActivity.class);
         startActivity(i);
-        // finish();
+        finish();
       }
 
     });
@@ -473,6 +473,11 @@ public class MainActivity extends AccountAuthenticatorActivity {
     public void setMessage(String message) {
       this.message = message;
     }
+  }
+
+  @Override
+  public void onBackPressed() {
+    super.onBackPressed();
   }
 }
 

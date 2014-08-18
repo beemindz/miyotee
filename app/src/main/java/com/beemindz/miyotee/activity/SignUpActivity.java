@@ -107,7 +107,7 @@ public class SignUpActivity extends AccountAuthenticatorActivity {
         // pDialog = ProgressDialog.show(SignUpActivity.this, "Loading...", "Please wait...", false, true);
         Intent i = new Intent(SignUpActivity.this, MainActivity.class);
         startActivity(i);
-        // finish();
+        finish();
       }
 
     });
@@ -231,5 +231,10 @@ public class SignUpActivity extends AccountAuthenticatorActivity {
         finish();
       }
     }
+  }
+
+  @Override
+  public void onBackPressed() {
+    super.onBackPressed();
   }
 }
